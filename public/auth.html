@@ -1,42 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>GlassLedger — Sign in</title>
-  <style>
-    body { font-family: sans-serif; background: #0d1117; color: #e6e6e6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-    .card { background: #161b22; padding: 32px; border-radius: 12px; width: 320px; }
-    .tabs { display: flex; margin-bottom: 20px; }
-    .tabs button { flex: 1; padding: 10px; background: none; border: none; color: #999; cursor: pointer; border-bottom: 2px solid #333; }
-    .tabs button.active { color: #fff; border-bottom: 2px solid #6366f1; }
-    input { width: 100%; padding: 10px; margin: 8px 0; background: #0d1117; border: 1px solid #333; border-radius: 6px; color: #fff; box-sizing: border-box; }
-    button.primary { width: 100%; padding: 10px; background: #6366f1; border: none; border-radius: 6px; color: #fff; cursor: pointer; margin-top: 8px; }
-    .google-btn { width: 100%; padding: 10px; background: #fff; color: #333; border: none; border-radius: 6px; cursor: pointer; margin-top: 12px; }
-    #error-box { display: none; background: #4a1b0c; color: #f0997b; padding: 8px; border-radius: 6px; margin-top: 10px; font-size: 13px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlassLedger — Sign in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #08080a;
+    --surface: rgba(255,255,255,0.045);
+    --surface-border: rgba(255,255,255,0.09);
+    --indigo: #6366f1;
+    --violet: #8b5cf6;
+    --emerald: #10b981;
+    --danger: #f0997b;
+    --text-primary: #ececef;
+    --text-muted: #8a8a94;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text-primary); font-family: var(--body);
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    background-image: radial-gradient(ellipse 900px 600px at 20% 0%, rgba(99,102,241,0.16), transparent 60%),
+                       radial-gradient(ellipse 700px 500px at 90% 100%, rgba(139,92,246,0.13), transparent 60%);
+  }
+
+  .card {
+    width: 100%; max-width: 460px;
+    background: #111114; border: 1px solid var(--surface-border);
+    border-radius: 20px; padding: 44px;
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,0.7), 0 0 60px -22px rgba(99,102,241,0.4);
+  }
+
+  .brand { display: flex; align-items: center; gap: 9px; margin-bottom: 26px; }
+  .brand svg { width: 22px; height: 22px; filter: drop-shadow(0 0 8px rgba(139,92,246,0.7)); }
+  .brand span { font-family: var(--display); font-size: 15px; font-weight: 600; color: var(--text-muted); }
+
+  .card h1 { font-family: var(--display); font-size: 27px; font-weight: 700; margin-bottom: 8px; }
+  .card .subtitle { color: var(--text-muted); font-size: 14.5px; margin-bottom: 30px; }
+
+  label { display: block; font-size: 13.5px; color: var(--text-primary); margin-bottom: 8px; margin-top: 20px; }
+  label:first-of-type { margin-top: 0; }
+  .label-row { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 8px; }
+  .label-row label { margin: 0; }
+  .label-row a { font-size: 13px; color: var(--violet); text-decoration: none; }
+  .label-row a:hover { text-decoration: underline; }
+
+  .input-wrap { position: relative; }
+  .input-wrap svg.icon {
+    position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+    width: 17px; height: 17px; color: var(--text-muted); pointer-events: none;
+  }
+  input {
+    width: 100%; padding: 14px 16px 14px 42px; background: rgba(255,255,255,0.03);
+    border: 1px solid var(--surface-border); border-radius: 10px; color: #fff;
+    font-family: var(--body); font-size: 15px; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input::placeholder { color: #55555f; }
+  input:focus {
+    outline: none; border-color: var(--violet);
+    box-shadow: 0 0 0 4px rgba(139,92,246,0.15), 0 0 20px -6px rgba(139,92,246,0.6);
+  }
+  .toggle-eye {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px;
+    display: flex;
+  }
+  .toggle-eye:hover { color: var(--text-primary); }
+  .toggle-eye svg { width: 18px; height: 18px; }
+
+  .remember-row { display: flex; align-items: center; gap: 8px; margin-top: 18px; }
+  .remember-row input[type="checkbox"] {
+    width: 17px; height: 17px; accent-color: var(--indigo); cursor: pointer; padding: 0;
+  }
+  .remember-row label { margin: 0; font-size: 13.5px; color: var(--text-muted); cursor: pointer; }
+
+  button.primary {
+    width: 100%; padding: 15px; margin-top: 24px;
+    background: linear-gradient(90deg, var(--indigo), var(--violet));
+    border: none; border-radius: 10px; color: #fff; font-family: var(--body);
+    font-size: 15.5px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 0 26px -6px rgba(99,102,241,0.65);
+    transition: transform 0.15s, box-shadow 0.2s;
+  }
+  button.primary svg { width: 16px; height: 16px; }
+  button.primary:hover { transform: translateY(-1px); box-shadow: 0 0 36px -4px rgba(139,92,246,0.8); }
+  button.primary:focus-visible { outline: 2px solid var(--violet); outline-offset: 3px; }
+
+  .divider {
+    display: flex; align-items: center; gap: 14px; margin: 26px 0;
+    color: var(--text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px;
+  }
+  .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--surface-border); }
+
+  .google-btn {
+    width: 100%; padding: 13px; background: rgba(255,255,255,0.03); color: var(--text-primary);
+    border: 1px solid var(--surface-border); border-radius: 10px; font-family: var(--body); font-weight: 500;
+    font-size: 14.5px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .google-btn:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
+  .google-btn svg { width: 18px; height: 18px; }
+
+  .switch-row { text-align: center; margin-top: 26px; font-size: 14px; color: var(--text-muted); }
+  .switch-row a { color: var(--violet); text-decoration: none; font-weight: 500; cursor: pointer; }
+  .switch-row a:hover { text-decoration: underline; }
+
+  #error-box {
+    display: none; margin-top: 18px; padding: 12px 14px; border-radius: 10px;
+    background: rgba(240,153,123,0.1); border: 1px solid rgba(240,153,123,0.3);
+    color: var(--danger); font-size: 13.5px;
+  }
+  #info-box {
+    display: none; margin-top: 18px; padding: 12px 14px; border-radius: 10px;
+    background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3);
+    color: var(--emerald); font-size: 13.5px;
+  }
+</style>
 </head>
 <body>
+
   <div class="card">
-    <div class="tabs">
-      <button id="login-tab" class="active">Login</button>
-      <button id="signup-tab">Sign up</button>
+    <div class="brand">
+      <svg viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#6366f1"/></linearGradient></defs>
+        <rect x="10" y="6" width="44" height="52" rx="6" fill="none" stroke="url(#g)" stroke-width="4"/>
+        <line x1="18" y1="22" x2="46" y2="22" stroke="url(#g)" stroke-width="4" stroke-linecap="round"/>
+        <line x1="18" y1="32" x2="46" y2="32" stroke="url(#g)" stroke-width="4" stroke-linecap="round"/>
+        <line x1="18" y1="42" x2="34" y2="42" stroke="url(#g)" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+      <span>GLASSLEDGER</span>
     </div>
 
-    <div id="login-form">
-      <input type="email" id="login-email" placeholder="Email">
-      <input type="password" id="login-password" placeholder="Password">
-      <button class="primary" id="login-btn">Log in</button>
-      <button class="google-btn">Continue with Google</button>
-    </div>
+    <h1 id="heading">Welcome back</h1>
+    <p class="subtitle" id="subtitle">Log in to your procurement dashboard</p>
 
-    <div id="signup-form" style="display:none">
-      <input type="email" id="signup-email" placeholder="Email">
-      <input type="password" id="signup-password" placeholder="Password (min 6 chars)">
-      <button class="primary" id="signup-btn">Create account</button>
-      <button class="google-btn">Continue with Google</button>
+    <form id="login-form">
+      <label for="login-email">Email</label>
+      <div class="input-wrap">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6.5l9 6 9-6M4 5h16a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>
+        <input type="email" id="login-email" placeholder="you@company.com">
+      </div>
+
+      <div class="label-row">
+        <label for="login-password">Password</label>
+        <a href="#" id="forgot-link">Forgot password?</a>
+      </div>
+      <div class="input-wrap">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+        <input type="password" id="login-password" placeholder="••••••••">
+        <button type="button" class="toggle-eye" data-target="login-password">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+
+      <div class="remember-row">
+        <input type="checkbox" id="remember-me">
+        <label for="remember-me">Remember me</label>
+      </div>
+
+      <button class="primary" type="submit" id="login-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+        Log in
+      </button>
+    </form>
+
+    <form id="signup-form" style="display:none">
+      <label for="signup-email">Email</label>
+      <div class="input-wrap">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6.5l9 6 9-6M4 5h16a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>
+        <input type="email" id="signup-email" placeholder="you@company.com">
+      </div>
+
+      <label for="signup-password">Password</label>
+      <div class="input-wrap">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+        <input type="password" id="signup-password" placeholder="Minimum 6 characters">
+        <button type="button" class="toggle-eye" data-target="signup-password">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+
+      <button class="primary" type="submit" id="signup-btn" style="margin-top:24px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Create account
+      </button>
+    </form>
+
+    <div class="divider">or continue with</div>
+
+    <button class="google-btn" id="google-btn">
+      <svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.9 2.4 30.4 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.6H24v9.1h12.6c-.5 3-2.2 5.5-4.6 7.2l7.3 5.7c4.3-4 6.8-9.8 6.8-17.4z"/><path fill="#FBBC05" d="M10.5 19.3c-.5 1.5-.8 3.1-.8 4.7s.3 3.2.8 4.7l-7.9 6.1C1 31.2 0 27.7 0 24s1-7.2 2.6-10.8l7.9 6.1z"/><path fill="#34A853" d="M24 48c6.4 0 11.9-2.1 15.8-5.8l-7.3-5.7c-2.1 1.4-4.9 2.3-8.5 2.3-6.3 0-11.6-3.5-13.5-8.5l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>
+      Continue with Google
+    </button>
+
+    <div class="switch-row" id="switch-row">
+      Don't have an account? <a id="switch-link">Sign up free</a>
     </div>
 
     <div id="error-box"></div>
+    <div id="info-box"></div>
   </div>
 
   <script type="module" src="js/auth.js"></script>

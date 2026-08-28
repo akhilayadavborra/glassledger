@@ -1,10 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>GlassLedger</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlassLedger — Autonomous procurement, real payments</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #08080a;
+    --surface: rgba(255,255,255,0.045);
+    --surface-border: rgba(255,255,255,0.09);
+    --indigo: #6366f1;
+    --violet: #8b5cf6;
+    --emerald: #10b981;
+    --text-primary: #ececef;
+    --text-muted: #8a8a94;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--text-primary);
+    font-family: var(--body); overflow-x: hidden;
+    background-image: radial-gradient(ellipse 900px 500px at 80% -10%, rgba(99,102,241,0.16), transparent 60%),
+                       radial-gradient(ellipse 700px 500px at 10% 30%, rgba(139,92,246,0.10), transparent 60%);
+  }
+  a { color: inherit; }
+
+  #splash {
+    position: fixed; inset: 0; background: #08080a; z-index: 200;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s;
+  }
+  #splash.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  #flash {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle, rgba(139,92,246,0.9), rgba(99,102,241,0.4) 40%, transparent 70%);
+    opacity: 0; animation: flashPop 0.5s ease-out forwards;
+  }
+  @keyframes flashPop {
+    0%   { opacity: 0; transform: scale(0.3); }
+    35%  { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.6); }
+  }
+
+  #stage { position: relative; display: flex; flex-direction: column; align-items: center; }
+
+  #symbol {
+    width: 64px; height: 64px; opacity: 0; margin-bottom: 22px;
+    animation: symbolIn 0.6s ease-out forwards 0.35s;
+    filter: drop-shadow(0 0 18px rgba(139,92,246,0.85)) drop-shadow(0 0 34px rgba(99,102,241,0.5));
+  }
+  @keyframes symbolIn {
+    0%   { opacity: 0; transform: scale(0.5) rotate(-8deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+
+  #wordmark {
+    font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: 1px; color: #f3f0ff;
+    opacity: 0; animation: fadeUp 0.5s ease forwards 0.7s;
+    text-shadow: 0 0 22px rgba(139,92,246,0.6);
+  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  #timerTrack {
+    width: 220px; height: 3px; margin-top: 26px; border-radius: 3px;
+    background: rgba(255,255,255,0.08); overflow: hidden;
+    opacity: 0; animation: fadeUp 0.4s ease forwards 1s;
+  }
+  #timerFill {
+    height: 100%; width: 100%; border-radius: 3px;
+    background: linear-gradient(90deg, var(--indigo), var(--violet));
+    box-shadow: 0 0 12px rgba(139,92,246,0.9);
+    transform-origin: left;
+    animation: countdown 1.6s linear forwards 1.05s;
+  }
+  @keyframes countdown { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+
+  nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 28px 56px; position: relative; z-index: 2;
+  }
+  nav .wordmark { font-family: var(--display); font-weight: 600; font-size: 18px; }
+  nav .signin {
+    font-size: 14px; color: var(--text-muted); text-decoration: none;
+    border: 1px solid var(--surface-border); padding: 8px 18px; border-radius: 6px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  nav .signin:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.2); }
+
+  .hero {
+    display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 40px;
+    align-items: center; max-width: 1180px; margin: 0 auto;
+    padding: 64px 56px 90px;
+  }
+  .eyebrow {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--violet); margin-bottom: 18px; display: flex; align-items: center; gap: 8px;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 0 3px rgba(16,185,129,0.18); }
+  .hero h1 {
+    font-family: var(--display); font-weight: 600; font-size: 46px; line-height: 1.18;
+    letter-spacing: -0.5px; max-width: 560px;
+  }
+  .hero h1 .accent { color: var(--violet); }
+  .hero p.sub { color: var(--text-muted); font-size: 17px; line-height: 1.6; margin: 22px 0 32px; max-width: 460px; }
+  .cta-row { display: flex; align-items: center; gap: 22px; }
+  .cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 26px; background: var(--indigo); color: #fff; border-radius: 8px;
+    text-decoration: none; font-weight: 500; font-size: 15px;
+    box-shadow: 0 0 0 rgba(99,102,241,0);
+    transition: background 0.2s, transform 0.2s, box-shadow 0.3s;
+  }
+  .cta:hover { background: #5457e0; transform: translateY(-1px); box-shadow: 0 0 24px rgba(99,102,241,0.55); }
+  .cta:focus-visible { outline: 2px solid var(--violet); outline-offset: 3px; }
+  .see-flow { font-size: 14px; color: var(--text-muted); text-decoration: none; border-bottom: 1px solid transparent; }
+  .see-flow:hover { color: var(--text-primary); border-color: var(--text-muted); }
+
+  .card-wrap { perspective: 1200px; }
+  .ledger-card {
+    background: var(--surface); border: 1px solid var(--surface-border);
+    border-radius: 16px; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    padding: 22px 22px 20px;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6), 0 0 40px -12px rgba(99,102,241,0.35);
+    transform: rotateY(-8deg) rotateX(4deg); transition: transform 0.15s ease-out;
+    max-width: 420px; margin-left: auto;
+  }
+  .ledger-card .lc-head {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono); font-size: 11px; color: var(--text-muted);
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px;
+    padding-bottom: 14px; border-bottom: 1px solid var(--surface-border);
+  }
+  .ledger-card .lc-head .live { display: flex; align-items: center; gap: 6px; color: var(--emerald); }
+  .live .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald); animation: pulse 1.6s ease-in-out infinite; box-shadow: 0 0 8px rgba(16,185,129,0.8); }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+  .lc-lines { font-family: var(--mono); font-size: 12.5px; line-height: 1.9; min-height: 132px; color: #cfcfe0; }
+  .lc-lines .agent-tag { color: var(--violet); }
+  .lc-lines .line { opacity: 0; transform: translateY(4px); animation: lineIn 0.5s ease forwards; }
+  @keyframes lineIn { to { opacity: 1; transform: translateY(0); } }
+  .lc-foot {
+    margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--surface-border);
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .lc-foot .label { font-size: 11px; color: var(--text-muted); font-family: var(--mono); text-transform: uppercase; letter-spacing: 1px; }
+  .lc-foot .amount { font-family: var(--mono); font-size: 19px; color: var(--emerald); font-weight: 500; text-shadow: 0 0 14px rgba(16,185,129,0.6); }
+
+  .flow { max-width: 1180px; margin: 0 auto; padding: 40px 56px 100px; }
+  .flow-title { font-family: var(--display); font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 36px; }
+  .flow-stages { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+  .flow-stages::before {
+    content: ""; position: absolute; top: 17px; left: 8%; right: 8%; height: 1px;
+    background: linear-gradient(90deg, var(--indigo), var(--violet), var(--emerald));
+    opacity: 0.5; z-index: 0;
+  }
+  .stage { position: relative; z-index: 1; padding-right: 20px; }
+  .stage .num {
+    width: 34px; height: 34px; border-radius: 50%; background: var(--bg);
+    border: 1px solid var(--surface-border); display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 13px; color: var(--violet); margin-bottom: 16px;
+    box-shadow: 0 0 14px -4px rgba(139,92,246,0.6);
+  }
+  .stage h3 { font-family: var(--display); font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .stage p { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; }
+
+  footer { text-align: center; padding: 30px; color: var(--text-muted); font-size: 12.5px; }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; padding: 40px 24px 60px; }
+    .ledger-card { margin: 0; transform: none; }
+    .flow-stages { grid-template-columns: 1fr 1fr; row-gap: 28px; }
+    .flow-stages::before { display: none; }
+    nav { padding: 22px 24px; }
+    .hero h1 { font-size: 34px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition: none !important; }
+  }
+</style>
 </head>
 <body>
-  <h1>GlassLedger is alive</h1>
+
+  <div id="splash">
+    <div id="flash"></div>
+    <div id="stage">
+      <svg id="symbol" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#8b5cf6"/>
+            <stop offset="100%" stop-color="#6366f1"/>
+          </linearGradient>
+        </defs>
+        <rect x="10" y="6" width="44" height="52" rx="6" fill="none" stroke="url(#g)" stroke-width="2.5"/>
+        <line x1="18" y1="22" x2="46" y2="22" stroke="url(#g)" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="18" y1="32" x2="46" y2="32" stroke="url(#g)" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="18" y1="42" x2="34" y2="42" stroke="url(#g)" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <div id="wordmark">GLASSLEDGER</div>
+      <div id="timerTrack"><div id="timerFill"></div></div>
+    </div>
+  </div>
+
+  <nav>
+    <div class="wordmark">GlassLedger</div>
+    <a href="auth.html" class="signin">Sign in</a>
+  </nav>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> Live agent, real settlement</div>
+      <h1>Every other AI tells you what to buy.<br><span class="accent">GlassLedger buys it.</span></h1>
+      <p class="sub">Autonomous procurement that detects shortages, reasons through vendors out loud, and settles payment in real time — with every decision visible before the money moves.</p>
+      <div class="cta-row">
+        <a href="auth.html" class="cta">Get started →</a>
+        <a href="#flow" class="see-flow">See how it works</a>
+      </div>
+    </div>
+
+    <div class="card-wrap">
+      <div class="ledger-card" id="ledgerCard">
+        <div class="lc-head">
+          <span>Ledger — agent mind log</span>
+          <span class="live"><span class="pulse"></span>Live</span>
+        </div>
+        <div class="lc-lines" id="lcLines"></div>
+        <div class="lc-foot">
+          <span class="label">Settled this week</span>
+          <span class="amount" id="lcAmount">₹0</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="flow" id="flow">
+    <div class="flow-title">The loop</div>
+    <div class="flow-stages">
+      <div class="stage"><div class="num">1</div><h3>Detect</h3><p>Inventory drops below the safe threshold and the agent wakes up.</p></div>
+      <div class="stage"><div class="num">2</div><h3>Decide</h3><p>Vendors are compared on cost, delivery speed, and downtime risk.</p></div>
+      <div class="stage"><div class="num">3</div><h3>Pay</h3><p>A real Razorpay order is created and settled automatically.</p></div>
+      <div class="stage"><div class="num">4</div><h3>Reconcile</h3><p>A webhook confirms payment and the ledger updates itself.</p></div>
+    </div>
+  </section>
+
+  <footer>GlassLedger — built for the Razorpay AI Buildathon</footer>
+
+  <script>
+    const splash = document.getElementById('splash');
+    let dismissed = false;
+    function dismissSplash() {
+      if (dismissed) return;
+      dismissed = true;
+      splash.classList.add('hide');
+    }
+    splash.addEventListener('click', dismissSplash);
+    setTimeout(dismissSplash, 2900);
+
+    const card = document.getElementById('ledgerCard');
+    const wrap = document.querySelector('.card-wrap');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion) {
+      wrap.addEventListener('mousemove', (e) => {
+        const r = wrap.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `rotateY(${-8 + x * 10}deg) rotateX(${4 - y * 10}deg)`;
+      });
+      wrap.addEventListener('mouseleave', () => {
+        card.style.transform = 'rotateY(-8deg) rotateX(4deg)';
+      });
+    }
+
+    const logLines = [
+      '<span class="agent-tag">[agent]</span> vendor_a cost = ₹4,000, delivery = 5 days',
+      '<span class="agent-tag">[agent]</span> vendor_b cost = ₹4,300, delivery = 1 day',
+      '<span class="agent-tag">[agent]</span> downtime loss ≈ ₹1,500/day',
+      '<span class="agent-tag">[agent]</span> proceeding with vendor_b',
+      '<span class="agent-tag">[agent]</span> payment captured, ledger updated'
+    ];
+    const lcLines = document.getElementById('lcLines');
+    let i = 0;
+    function renderLines() {
+      lcLines.innerHTML = '';
+      const visible = logLines.slice(0, i + 1);
+      visible.forEach((text, idx) => {
+        const div = document.createElement('div');
+        div.className = 'line';
+        div.style.animationDelay = (idx * 0.05) + 's';
+        div.innerHTML = text;
+        lcLines.appendChild(div);
+      });
+      i = (i + 1) % logLines.length;
+      if (i === 0) setTimeout(() => { lcLines.innerHTML = ''; }, 900);
+    }
+    renderLines();
+    setInterval(renderLines, 1600);
+
+    let amount = 0;
+    const target = 42300;
+    const amountEl = document.getElementById('lcAmount');
+    const tick = setInterval(() => {
+      amount += Math.ceil((target - amount) / 8) || 1;
+      amountEl.textContent = '₹' + amount.toLocaleString('en-IN');
+      if (amount >= target) clearInterval(tick);
+    }, 90);
+  </script>
+
 </body>
 </html>
