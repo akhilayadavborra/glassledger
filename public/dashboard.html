@@ -1,11 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>GlassLedger — Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlassLedger — Dashboard</title>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #08080a; --surface: rgba(255,255,255,0.045); --surface-border: rgba(255,255,255,0.09);
+    --indigo: #6366f1; --violet: #8b5cf6; --emerald: #10b981; --danger: #f0997b;
+    --text-primary: #ececef; --text-muted: #8a8a94;
+    --display: 'Space Grotesk', sans-serif; --body: 'Inter', sans-serif; --mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text-primary); font-family: var(--body);
+    min-height: 100vh; padding: 40px;
+    background-image: radial-gradient(ellipse 900px 500px at 85% -10%, rgba(99,102,241,0.14), transparent 60%);
+  }
+  h1 { font-family: var(--display); font-size: 24px; margin-bottom: 4px; }
+  .sub { color: var(--text-muted); font-size: 14px; margin-bottom: 30px; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+
+  .panel {
+    background: var(--surface); border: 1px solid var(--surface-border); border-radius: 14px;
+    padding: 22px; backdrop-filter: blur(14px);
+  }
+  .panel h2 { font-family: var(--display); font-size: 15px; margin-bottom: 16px; }
+
+  .vendor-row {
+    display: flex; justify-content: space-between; font-family: var(--mono);
+    font-size: 13px; padding: 10px 0; border-bottom: 1px solid var(--surface-border);
+  }
+  .vendor-row:last-child { border-bottom: none; }
+
+  button.trigger {
+    width: 100%; margin-top: 18px; padding: 13px; background: linear-gradient(90deg, var(--indigo), var(--violet));
+    border: none; border-radius: 10px; color: #fff; font-weight: 600; cursor: pointer;
+    box-shadow: 0 0 24px -6px rgba(99,102,241,0.6);
+  }
+  button.trigger:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .log { font-family: var(--mono); font-size: 12.5px; line-height: 1.9; min-height: 140px; color: #cfcfe0; }
+  .log .agent-tag { color: var(--violet); }
+  .log .line { opacity: 0; animation: lineIn 0.4s ease forwards; }
+  @keyframes lineIn { to { opacity: 1; } }
+
+  .decision-box { margin-top: 16px; padding: 14px; border-radius: 10px; border: 1px solid var(--surface-border); display: none; }
+  .decision-box.show { display: block; }
+  .decision-box .name { font-weight: 600; color: var(--emerald); }
+
+  .approve-btn {
+    margin-top: 12px; width: 100%; padding: 11px; background: rgba(240,153,123,0.12);
+    border: 1px solid rgba(240,153,123,0.4); color: var(--danger); border-radius: 8px;
+    font-weight: 600; cursor: pointer; display: none;
+  }
+  .approve-btn.show { display: block; }
+
+  #error { display: none; margin-top: 14px; color: var(--danger); font-size: 13px; }
+</style>
 </head>
-<body style="background:#0d1117; color:#fff; font-family:sans-serif; padding:40px;">
-  <h1>Welcome to GlassLedger</h1>
-  <p>Dashboard coming next.</p>
+<body>
+
+  <h1>GlassLedger Dashboard</h1>
+  <p class="sub">Simulate a shortage and watch the agent reason through vendors</p>
+
+  <div class="grid">
+    <div class="panel">
+      <h2>Available vendors</h2>
+      <div id="vendorList"></div>
+      <button class="trigger" id="triggerBtn">Simulate inventory shortage</button>
+      <div id="error"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Agent mind log</h2>
+      <div class="log" id="log">Waiting for a trigger…</div>
+      <div class="decision-box" id="decisionBox">
+        <div>Decision: <span class="name" id="decisionName"></span></div>
+        <div id="decisionMeta" style="color:var(--text-muted); font-size:12.5px; margin-top:4px;"></div>
+      </div>
+      <button class="approve-btn" id="approveBtn">⚠ Requires manual approval — click to approve</button>
+    </div>
+  </div>
+
+  <script>
+    const vendorList = document.getElementById('vendorList');
+    const triggerBtn = document.getElementById('triggerBtn');
+    const log = document.getElementById('log');
+    const decisionBox = document.getElementById('decisionBox');
+    const decisionName = document.getElementById('decisionName');
+    const decisionMeta = document.getElementById('decisionMeta');
+    const approveBtn = document.getElementById('approveBtn');
+    const errorEl = document.getElementById('error');
+
+    let currentDecision = null;
+
+    async function loadVendors() {
+      const res = await fetch('/api/vendors');
+      const data = await res.json();
+      vendorList.innerHTML = data.vendors.map(v =>
+        `<div class="vendor-row"><span>${v.name}</span><span>₹${v.cost} · ${v.deliveryDays}d</span></div>`
+      ).join('');
+    }
+    loadVendors();
+
+    function renderLog(lines) {
+      log.innerHTML = '';
+      lines.forEach((text, idx) => {
+        const div = document.createElement('div');
+        div.className = 'line';
+        div.style.animationDelay = (idx * 0.35) + 's';
+        div.innerHTML = text.replace('[Agent]:', '<span class="agent-tag">[Agent]:</span>');
+        log.appendChild(div);
+      });
+    }
+
+    async function startPayment(vendor) {
+      errorEl.style.display = 'none';
+      const res = await fetch('/api/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ vendorId: vendor.id })
+      });
+      const order = await res.json();
+      if (!res.ok) {
+        errorEl.textContent = order.error;
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      const options = {
+        key: order.keyId,
+        amount: order.amount,
+        currency: order.currency,
+        name: 'GlassLedger',
+        description: `Procurement order — ${order.vendorName}`,
+        order_id: order.orderId,
+        handler: async function (response) {
+          decisionMeta.textContent += ' — verifying payment…';
+
+          const verifyRes = await fetch('/api/verify-payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              vendor: vendor
+            })
+          });
+          const result = await verifyRes.json();
+
+          if (result.verified) {
+            decisionMeta.textContent = `₹${vendor.cost} · ${vendor.deliveryDays} day delivery — ✅ settled, ledger total ₹${result.ledgerTotal}`;
+          } else {
+            decisionMeta.textContent = `₹${vendor.cost} · ${vendor.deliveryDays} day delivery — ⚠ verification failed`;
+          }
+        },
+        theme: { color: '#6366f1' }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+    }
+
+    triggerBtn.addEventListener('click', async () => {
+      errorEl.style.display = 'none';
+      decisionBox.classList.remove('show');
+      approveBtn.classList.remove('show');
+      triggerBtn.disabled = true;
+      log.textContent = 'Agent thinking…';
+
+      try {
+        const res = await fetch('/api/decide', { method: 'POST' });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Decision failed');
+
+        currentDecision = data.decision;
+        renderLog(data.reasoning);
+        decisionName.textContent = data.decision.name;
+        decisionMeta.textContent = `₹${data.decision.cost} · ${data.decision.deliveryDays} day delivery`;
+        decisionBox.classList.add('show');
+
+        if (data.requiresApproval) {
+          approveBtn.classList.add('show');
+        } else {
+          startPayment(data.decision);
+        }
+      } catch (err) {
+        errorEl.textContent = err.message;
+        errorEl.style.display = 'block';
+        log.textContent = 'Agent hit an error.';
+      } finally {
+        triggerBtn.disabled = false;
+      }
+    });
+
+    approveBtn.addEventListener('click', () => {
+      approveBtn.textContent = '✅ Approved — proceeding to payment';
+      approveBtn.disabled = true;
+      startPayment(currentDecision);
+    });
+  </script>
+
 </body>
 </html>
