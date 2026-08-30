@@ -20,8 +20,18 @@
     min-height: 100vh; padding: 40px;
     background-image: radial-gradient(ellipse 900px 500px at 85% -10%, rgba(99,102,241,0.14), transparent 60%);
   }
+  .top-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; flex-wrap: wrap; gap: 16px; }
   h1 { font-family: var(--display); font-size: 24px; margin-bottom: 4px; }
-  .sub { color: var(--text-muted); font-size: 14px; margin-bottom: 30px; }
+  .sub { color: var(--text-muted); font-size: 14px; }
+
+  .ledger-stat {
+    background: var(--surface); border: 1px solid var(--surface-border); border-radius: 14px;
+    padding: 16px 22px; backdrop-filter: blur(14px); text-align: right;
+    box-shadow: 0 0 30px -12px rgba(16,185,129,0.3);
+  }
+  .ledger-stat .label { font-family: var(--mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+  .ledger-stat .value { font-family: var(--mono); font-size: 22px; color: var(--emerald); font-weight: 600; margin-top: 4px; text-shadow: 0 0 16px rgba(16,185,129,0.5); }
+  .ledger-stat .count { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
 
@@ -61,12 +71,31 @@
   .approve-btn.show { display: block; }
 
   #error { display: none; margin-top: 14px; color: var(--danger); font-size: 13px; }
+
+  .recent-txns { margin-top: 24px; }
+  .recent-txns h2 { font-family: var(--display); font-size: 15px; margin-bottom: 14px; }
+  .txn-row {
+    display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px;
+    padding: 9px 0; border-bottom: 1px solid var(--surface-border); color: var(--text-muted);
+  }
+  .txn-row:last-child { border-bottom: none; }
+  .txn-row .vendor { color: var(--text-primary); }
+  .txn-row .amount { color: var(--emerald); }
 </style>
 </head>
 <body>
 
-  <h1>GlassLedger Dashboard</h1>
-  <p class="sub">Simulate a shortage and watch the agent reason through vendors</p>
+  <div class="top-row">
+    <div>
+      <h1>GlassLedger Dashboard</h1>
+      <p class="sub">Simulate a shortage and watch the agent reason through vendors</p>
+    </div>
+    <div class="ledger-stat">
+      <div class="label">Total settled</div>
+      <div class="value" id="ledgerTotal">₹0</div>
+      <div class="count" id="ledgerCount">0 transactions</div>
+    </div>
+  </div>
 
   <div class="grid">
     <div class="panel">
@@ -74,6 +103,11 @@
       <div id="vendorList"></div>
       <button class="trigger" id="triggerBtn">Simulate inventory shortage</button>
       <div id="error"></div>
+
+      <div class="recent-txns">
+        <h2>Recent transactions</h2>
+        <div id="txnList" style="font-size:12.5px; color:var(--text-muted);">No transactions yet.</div>
+      </div>
     </div>
 
     <div class="panel">
@@ -96,6 +130,9 @@
     const decisionMeta = document.getElementById('decisionMeta');
     const approveBtn = document.getElementById('approveBtn');
     const errorEl = document.getElementById('error');
+    const ledgerTotalEl = document.getElementById('ledgerTotal');
+    const ledgerCountEl = document.getElementById('ledgerCount');
+    const txnList = document.getElementById('txnList');
 
     let currentDecision = null;
 
@@ -106,7 +143,25 @@
         `<div class="vendor-row"><span>${v.name}</span><span>₹${v.cost} · ${v.deliveryDays}d</span></div>`
       ).join('');
     }
+
+    async function loadLedger() {
+      const res = await fetch('/api/ledger');
+      const ledger = await res.json();
+      ledgerTotalEl.textContent = '₹' + ledger.totalSettled.toLocaleString('en-IN');
+      ledgerCountEl.textContent = `${ledger.transactions.length} transaction${ledger.transactions.length === 1 ? '' : 's'}`;
+
+      if (ledger.transactions.length === 0) {
+        txnList.innerHTML = 'No transactions yet.';
+      } else {
+        const recent = ledger.transactions.slice(-5).reverse();
+        txnList.innerHTML = recent.map(t =>
+          `<div class="txn-row"><span class="vendor">${t.vendor}</span><span class="amount">₹${t.amount}</span></div>`
+        ).join('');
+      }
+    }
+
     loadVendors();
+    loadLedger();
 
     function renderLog(lines) {
       log.innerHTML = '';
@@ -157,6 +212,7 @@
 
           if (result.verified) {
             decisionMeta.textContent = `₹${vendor.cost} · ${vendor.deliveryDays} day delivery — ✅ settled, ledger total ₹${result.ledgerTotal}`;
+            loadLedger();
           } else {
             decisionMeta.textContent = `₹${vendor.cost} · ${vendor.deliveryDays} day delivery — ⚠ verification failed`;
           }
