@@ -1,3 +1,5 @@
 node_modules/
 .env
 ledger.json
+audit.json
+vendor_failures.json

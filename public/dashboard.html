@@ -3,265 +3,1557 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GlassLedger — Dashboard</title>
+<title>GlassLedger — Procurement Console</title>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #08080a; --surface: rgba(255,255,255,0.045); --surface-border: rgba(255,255,255,0.09);
-    --indigo: #6366f1; --violet: #8b5cf6; --emerald: #10b981; --danger: #f0997b;
-    --text-primary: #ececef; --text-muted: #8a8a94;
-    --display: 'Space Grotesk', sans-serif; --body: 'Inter', sans-serif; --mono: 'JetBrains Mono', monospace;
+    --bg:#0a0a0c; --surface:rgba(255,255,255,0.035); --surface-solid:#101013; --surface-border:rgba(255,255,255,0.08);
+    --indigo:#6366f1; --violet:#8b5cf6; --emerald:#10b981; --amber:#e0a63c; --danger:#e0836a;
+    --text-primary:#e4e4e8; --text-muted:#84848d;
+    --display:'Space Grotesk',sans-serif; --body:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+    --sidebar-w:250px;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg); color: var(--text-primary); font-family: var(--body);
-    min-height: 100vh; padding: 40px;
-    background-image: radial-gradient(ellipse 900px 500px at 85% -10%, rgba(99,102,241,0.14), transparent 60%);
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text-primary); font-family:var(--body); font-size:14px; }
+  a { color:inherit; text-decoration:none; }
+  button { font-family:var(--body); }
+
+  /* ---------- layout ---------- */
+  #app { display:flex; min-height:100vh; }
+
+  /* sidebar */
+  #sidebar {
+    width:var(--sidebar-w); flex-shrink:0; background:var(--surface-solid); border-right:1px solid var(--surface-border);
+    display:flex; flex-direction:column; position:sticky; top:0; height:100vh;
   }
-  .top-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; flex-wrap: wrap; gap: 16px; }
-  h1 { font-family: var(--display); font-size: 24px; margin-bottom: 4px; }
-  .sub { color: var(--text-muted); font-size: 14px; }
-
-  .ledger-stat {
-    background: var(--surface); border: 1px solid var(--surface-border); border-radius: 14px;
-    padding: 16px 22px; backdrop-filter: blur(14px); text-align: right;
-    box-shadow: 0 0 30px -12px rgba(16,185,129,0.3);
+  .side-brand { padding:20px 20px; font-family:var(--display); font-weight:700; font-size:15px; border-bottom:1px solid var(--surface-border); display:flex; align-items:center; gap:9px; }
+  .side-brand .mark { width:20px; height:20px; border-radius:5px; background:linear-gradient(135deg,var(--indigo),var(--violet)); flex-shrink:0; }
+  .side-nav { flex:1; overflow-y:auto; padding:12px 10px; }
+  .side-section { margin-bottom:4px; }
+  .side-section-label { font-family:var(--mono); font-size:10px; letter-spacing:0.7px; text-transform:uppercase; color:#55555e; padding:14px 12px 6px; }
+  .side-section:first-child .side-section-label { padding-top:4px; }
+  .side-item {
+    display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:7px; cursor:pointer;
+    color:var(--text-muted); font-size:13px; font-weight:500; margin-bottom:1px; transition:background 0.15s,color 0.15s;
   }
-  .ledger-stat .label { font-family: var(--mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-  .ledger-stat .value { font-family: var(--mono); font-size: 22px; color: var(--emerald); font-weight: 600; margin-top: 4px; text-shadow: 0 0 16px rgba(16,185,129,0.5); }
-  .ledger-stat .count { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .side-item svg { width:15px; height:15px; flex-shrink:0; opacity:0.75; }
+  .side-item:hover { background:rgba(255,255,255,0.03); color:var(--text-primary); }
+  .side-item.active { background:rgba(99,102,241,0.11); color:#fff; }
+  .side-item.active svg { opacity:1; }
+  .side-item .dot { display:none; }
+  .side-foot { padding:14px; border-top:1px solid var(--surface-border); }
+  .side-user { font-family:var(--mono); font-size:11.5px; color:var(--text-muted); margin-bottom:8px; word-break:break-all; }
+  .side-logout { width:100%; padding:8px; background:none; border:1px solid var(--surface-border); color:var(--text-muted); border-radius:6px; cursor:pointer; font-size:12.5px; }
+  .side-logout:hover { color:#fff; border-color:rgba(255,255,255,0.25); }
 
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  /* main */
+  #main { flex:1; min-width:0; }
+  #topbar { display:flex; justify-content:space-between; align-items:center; padding:20px 32px; border-bottom:1px solid var(--surface-border); }
+  #topbar h1 { font-family:var(--display); font-size:20px; }
+  #topbar .subtitle { color:var(--text-muted); font-size:12.5px; margin-top:2px; }
+  .env-note { font-family:var(--mono); font-size:11px; color:var(--text-muted); background:rgba(255,255,255,0.03); border:1px solid var(--surface-border); padding:5px 10px; border-radius:6px; }
+  #content { padding:28px 32px; }
+  .view { display:none; }
+  .view.active { display:block; }
 
-  .panel {
-    background: var(--surface); border: 1px solid var(--surface-border); border-radius: 14px;
-    padding: 22px; backdrop-filter: blur(14px);
+  /* ---------- shared components ---------- */
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:26px; }
+  .kpi-card { background:var(--surface); border:1px solid var(--surface-border); border-radius:12px; padding:16px 18px; }
+  .kpi-card .label { font-family:var(--mono); font-size:10.5px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; }
+  .kpi-card .value { font-family:var(--display); font-size:22px; font-weight:600; margin-top:6px; }
+  .kpi-card .value.green { color:var(--emerald); }
+  .kpi-card .value.indigo { color:var(--indigo); }
+  .kpi-card .value.amber { color:var(--amber); }
+  .kpi-card .sub { font-size:10.5px; color:#5c5c66; margin-top:4px; }
+  .kpi-grid-secondary { margin-bottom:0; }
+  .kpi-grid-secondary .kpi-card { background:rgba(255,255,255,0.02); }
+
+  /* lifecycle timeline (Procurement Detail) */
+  .lc-track { display:flex; flex-direction:column; }
+  .lc-row { display:flex; gap:12px; position:relative; padding-bottom:18px; }
+  .lc-row:last-child { padding-bottom:0; }
+  .lc-row::before { content:''; position:absolute; left:5px; top:14px; bottom:-4px; width:1px; background:var(--surface-border); }
+  .lc-row:last-child::before { display:none; }
+  .lc-dot { width:11px; height:11px; border-radius:50%; margin-top:2px; flex-shrink:0; background:var(--surface-border); border:2px solid var(--bg); z-index:1; }
+  .lc-row.lc-done .lc-dot { background:var(--emerald); }
+  .lc-row.lc-current .lc-dot { background:var(--indigo); }
+  .lc-row.lc-warn .lc-dot { background:var(--amber); }
+  .lc-row.lc-pending .lc-dot { background:rgba(255,255,255,0.12); }
+  .lc-body { flex:1; }
+  .lc-top { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+  .lc-label { font-size:12.5px; font-weight:600; color:var(--text-primary); }
+  .lc-row.lc-pending .lc-label { color:#5c5c66; font-weight:500; }
+  .lc-row.lc-current .lc-label { color:var(--indigo); }
+  .lc-time { font-size:10.5px; color:var(--text-muted); font-family:var(--mono); white-space:nowrap; }
+  .lc-record { font-size:11px; color:var(--text-muted); margin-top:2px; }
+  .lc-notyet { font-size:11px; color:#5c5c66; margin-top:2px; font-style:italic; }
+  .lc-row.clickable { cursor:pointer; }
+  .lc-row.clickable .lc-label { text-decoration:underline; text-decoration-color:rgba(255,255,255,0.25); text-underline-offset:3px; }
+  .lc-row.clickable:hover .lc-label { color:var(--indigo); text-decoration-color:var(--indigo); }
+  @keyframes lcFlash { 0%,100% { background:transparent; } 30% { background:rgba(99,102,241,0.18); } }
+  .lc-flash { animation:lcFlash 1.2s ease; border-radius:6px; }
+
+  .panel { background:var(--surface); border:1px solid var(--surface-border); border-radius:12px; padding:20px; margin-bottom:20px; }
+  .panel h2 { font-family:var(--display); font-size:14.5px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; }
+  .panel h2 .action-btn { font-size:11.5px; font-weight:500; color:var(--violet); background:none; border:1px solid rgba(139,92,246,0.35); padding:5px 11px; border-radius:6px; cursor:pointer; }
+
+  table { width:100%; border-collapse:collapse; font-size:12.5px; }
+  thead th { text-align:left; font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-muted); padding:8px 10px; border-bottom:1px solid var(--surface-border); }
+  tbody td { padding:10px; border-bottom:1px solid var(--surface-border); color:var(--text-primary); }
+  tbody tr:last-child td { border-bottom:none; }
+  tbody tr.clickable { cursor:pointer; }
+  tbody tr.clickable:hover { background:rgba(255,255,255,0.02); }
+  .rec-link { color:var(--text-primary); text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.18); transition:color 0.15s,border-color 0.15s; }
+  .rec-link:hover { color:var(--indigo); border-color:var(--indigo); }
+  .mono { font-family:var(--mono); }
+  .muted { color:var(--text-muted); }
+
+  .badge { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:600; padding:4px 10px; border-radius:20px; }
+  .badge.green { background:rgba(16,185,129,0.12); color:var(--emerald); border:1px solid rgba(16,185,129,0.35); }
+  .badge.amber { background:rgba(245,166,35,0.12); color:var(--amber); border:1px solid rgba(245,166,35,0.35); }
+  .badge.red { background:rgba(240,153,123,0.12); color:var(--danger); border:1px solid rgba(240,153,123,0.35); }
+  .badge.indigo { background:rgba(99,102,241,0.12); color:var(--indigo); border:1px solid rgba(99,102,241,0.35); }
+  .badge.gray { background:rgba(255,255,255,0.05); color:var(--text-muted); border:1px solid var(--surface-border); }
+
+  .empty-state { text-align:center; padding:36px 16px; color:var(--text-muted); font-size:13px; }
+  .empty-state .big { font-size:26px; margin-bottom:8px; }
+
+  .btn { padding:8px 15px; border-radius:7px; font-size:12.5px; font-weight:600; cursor:pointer; border:none; }
+  .btn-primary { background:var(--indigo); color:#fff; }
+  .btn-primary:hover { background:#5457e0; }
+  .btn-ghost { background:none; border:1px solid var(--surface-border); color:var(--text-muted); }
+  .btn-ghost:hover { color:#fff; border-color:rgba(255,255,255,0.25); }
+  .btn-danger { background:rgba(224,131,106,0.12); border:1px solid rgba(224,131,106,0.35); color:var(--danger); }
+  .btn-green { background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.35); color:var(--emerald); }
+  .btn-sm { padding:5px 10px; font-size:11.5px; }
+  .btn:disabled { opacity:0.45; cursor:not-allowed; }
+  .btn-row { display:flex; gap:8px; }
+
+  /* sub-tabs */
+  .subtabs { display:flex; gap:4px; margin-bottom:20px; border-bottom:1px solid var(--surface-border); }
+  .subtab { padding:9px 14px; font-size:12.5px; font-weight:500; color:var(--text-muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .subtab:hover { color:var(--text-primary); }
+  .subtab.active { color:#fff; border-bottom-color:var(--indigo); }
+
+  /* search + sort */
+  .table-toolbar { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; }
+  .search-input { padding:7px 11px; background:rgba(255,255,255,0.03); border:1px solid var(--surface-border); border-radius:7px; color:#fff; font-size:12.5px; width:220px; }
+  .search-input:focus { outline:none; border-color:rgba(255,255,255,0.22); }
+  th.sortable { cursor:pointer; user-select:none; }
+  th.sortable:hover { color:var(--text-primary); }
+  th.sortable .arrow { opacity:0.5; margin-left:3px; }
+
+  /* demo controls box */
+  .demo-box { border:1px dashed var(--surface-border); border-radius:10px; padding:14px 16px; margin-top:18px; background:rgba(255,255,255,0.015); }
+  .demo-box .demo-label { font-family:var(--mono); font-size:10px; letter-spacing:0.6px; text-transform:uppercase; color:#5c5c66; margin-bottom:8px; }
+  .demo-box .demo-desc { font-size:11.5px; color:var(--text-muted); margin-bottom:10px; }
+
+  /* bar chart (dependency-free) */
+  .bar-chart { display:flex; align-items:flex-end; gap:8px; height:160px; padding-top:10px; }
+  .bar-chart .bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; justify-content:flex-end; }
+  .bar-chart .bar { width:100%; max-width:34px; background:var(--indigo); border-radius:4px 4px 0 0; min-height:2px; }
+  .bar-chart .bar-label { font-size:10px; color:var(--text-muted); text-align:center; }
+  .bar-chart .bar-value { font-size:10.5px; color:var(--text-primary); font-family:var(--mono); }
+
+  /* inventory meter */
+  .inv-track { height:10px; border-radius:6px; background:rgba(255,255,255,0.06); overflow:hidden; margin:10px 0; }
+  .inv-fill { height:100%; background:linear-gradient(90deg,var(--emerald),var(--indigo)); transition:width 0.6s linear,background 0.4s; }
+  .inv-fill.low { background:linear-gradient(90deg,var(--danger),#e05c3f); }
+
+  /* agent state */
+  .state-row { display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:16px; }
+  .state-pill { font-family:var(--mono); font-size:12px; padding:7px 16px; border-radius:20px; background:rgba(99,102,241,0.12); border:1px solid rgba(99,102,241,0.4); color:var(--indigo); }
+  .state-pill.failure { background:rgba(240,153,123,0.12); border-color:rgba(240,153,123,0.4); color:var(--danger); }
+  .state-pill.success { background:rgba(16,185,129,0.12); border-color:rgba(16,185,129,0.4); color:var(--emerald); }
+  .state-pill.idle { background:rgba(255,255,255,0.04); border-color:var(--surface-border); color:var(--text-muted); }
+  .state-steps { display:flex; gap:6px; }
+  .state-dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.1); }
+  .state-dot.done { background:var(--emerald); }
+  .state-dot.activeDot { background:var(--indigo); }
+  .recovery-btn { font-size:12px; padding:6px 14px; border-radius:6px; cursor:pointer; background:rgba(240,153,123,0.12); border:1px solid rgba(240,153,123,0.4); color:var(--danger); }
+
+  .activity-log { font-family:var(--mono); font-size:12px; line-height:1.9; min-height:100px; max-height:340px; overflow-y:auto; color:#cfcfe0; }
+  .activity-log .line { opacity:0; animation:lineIn 0.35s ease forwards; padding:2px 0; }
+  .activity-log .line.blocked { color:var(--danger); }
+  .activity-log .line.ok { color:#cfcfe0; }
+  .activity-log .line.rationale { color:var(--violet); font-style:italic; }
+  @keyframes lineIn { to { opacity:1; } }
+
+  .comparison-table th,.comparison-table td { text-align:right; font-family:var(--mono); font-size:11.5px; }
+  .comparison-table th:first-child,.comparison-table td:first-child { text-align:left; }
+  .comparison-table tr.chosen td { color:var(--emerald); font-weight:600; }
+  .comparison-table tr.chosen { background:rgba(16,185,129,0.06); }
+
+  .approval-reason { margin-top:10px; padding:10px 12px; border-radius:8px; font-size:12px; background:rgba(224,166,60,0.08); border:1px solid rgba(224,166,60,0.28); color:var(--amber); }
+  .policy-rules { margin-top:8px; }
+  .policy-rules-label { font-family:var(--mono); font-size:10px; letter-spacing:0.6px; text-transform:uppercase; color:#5c5c66; margin-bottom:6px; }
+  .policy-rule-combined { font-family:var(--mono); font-size:12px; color:var(--amber); margin-bottom:8px; padding:6px 10px; background:rgba(224,166,60,0.08); border-radius:6px; display:inline-block; }
+  .verify-badge { font-family:var(--mono); font-size:12px; font-weight:600; padding:8px 12px; border-radius:8px; margin-bottom:12px; }
+  .verify-ok { background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); color:var(--emerald); }
+  .verify-fail { background:rgba(224,131,106,0.1); border:1px solid rgba(224,131,106,0.35); color:var(--danger); }
+  .verify-fail-msg { font-family:var(--body); font-weight:400; font-size:11.5px; margin-top:4px; opacity:0.9; }
+
+  /* loading skeleton */
+  .skeleton-panel { padding:4px 0; }
+  .skel-line, .skel-row { background:linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 37%, rgba(255,255,255,0.04) 63%); background-size:400% 100%; animation:skelShimmer 1.4s ease infinite; border-radius:6px; }
+  .skel-line { height:14px; margin-bottom:20px; }
+  .skel-line.w60 { width:60%; } .skel-line.w40 { width:40%; }
+  .skel-row { height:52px; margin-bottom:10px; }
+  @keyframes skelShimmer { 0% { background-position:100% 50%; } 100% { background-position:0 50%; } }
+
+  /* error state */
+  .error-panel { text-align:center; padding:40px 20px; }
+  .error-icon { font-size:26px; color:var(--danger); margin-bottom:10px; }
+  .error-title { font-family:var(--display); font-size:14px; font-weight:600; margin-bottom:6px; }
+  .error-msg { font-size:12px; color:var(--text-muted); margin-bottom:16px; }
+
+  /* agent active/idle badge */
+  .agent-badge { display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:10px; letter-spacing:0.5px; color:#5c5c66; background:rgba(255,255,255,0.04); border:1px solid var(--surface-border); border-radius:20px; padding:4px 10px; }
+  .agent-badge-dot { width:6px; height:6px; border-radius:50%; background:#5c5c66; }
+  .agent-badge.active { color:var(--indigo); border-color:rgba(99,102,241,0.4); background:rgba(99,102,241,0.08); }
+  .agent-badge.active .agent-badge-dot { background:var(--indigo); box-shadow:0 0 6px rgba(99,102,241,0.7); animation:agentPulse 1.6s ease infinite; }
+  @keyframes agentPulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+  .policy-rule-row { display:flex; align-items:center; gap:10px; padding:7px 10px; border-radius:7px; background:rgba(224,166,60,0.06); border:1px solid rgba(224,166,60,0.22); margin-bottom:6px; }
+  .policy-rule-detail { font-size:12px; color:var(--text-muted); }
+
+  /* modal */
+  #modalOverlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center; z-index:500; padding:20px; }
+  #modalOverlay.show { display:flex; }
+  #modalBox { background:var(--surface-solid); border:1px solid var(--surface-border); border-radius:14px; max-width:640px; width:100%; max-height:85vh; overflow-y:auto; padding:26px; }
+  #modalBox .modal-head { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px; }
+  #modalBox h3 { font-family:var(--display); font-size:17px; }
+  #modalClose { background:none; border:none; color:var(--text-muted); font-size:20px; cursor:pointer; }
+
+  /* toasts */
+  #toastContainer { position:fixed; bottom:24px; right:24px; display:flex; flex-direction:column; gap:10px; z-index:999; }
+  .toast { font-size:13px; padding:11px 16px; border-radius:10px; backdrop-filter:blur(10px); box-shadow:0 12px 30px -10px rgba(0,0,0,0.6); animation:toastIn 0.3s ease,toastOut 0.3s ease 2.7s forwards; max-width:320px; }
+  .toast.success { background:rgba(16,185,129,0.14); border:1px solid rgba(16,185,129,0.4); color:var(--emerald); }
+  .toast.error { background:rgba(240,153,123,0.14); border:1px solid rgba(240,153,123,0.4); color:var(--danger); }
+  @keyframes toastIn { from{opacity:0;transform:translateX(20px);} to{opacity:1;transform:translateX(0);} }
+  @keyframes toastOut { to{opacity:0;transform:translateX(20px);} }
+
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start; }
+  .ask-row { display:flex; gap:10px; margin-bottom:12px; }
+  .ask-row input { flex:1; padding:10px 12px; background:rgba(255,255,255,0.03); border:1px solid var(--surface-border); border-radius:8px; color:#fff; font-size:13px; }
+  .ask-row input:focus { outline:none; border-color:var(--violet); }
+  #askAnswer { font-family:var(--mono); font-size:12.5px; color:var(--text-muted); line-height:1.6; }
+
+  .match-row,.audit-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--surface-border); font-size:12px; }
+  .match-row:last-child,.audit-row:last-child { border-bottom:none; }
+
+  @media (max-width:900px) {
+    #sidebar { width:64px; }
+    .side-item span.label { display:none; }
+    .side-brand { font-size:0; }
+    .two-col { grid-template-columns:1fr; }
+    .kpi-grid { grid-template-columns:1fr 1fr; }
   }
-  .panel h2 { font-family: var(--display); font-size: 15px; margin-bottom: 16px; }
-
-  .vendor-row {
-    display: flex; justify-content: space-between; font-family: var(--mono);
-    font-size: 13px; padding: 10px 0; border-bottom: 1px solid var(--surface-border);
-  }
-  .vendor-row:last-child { border-bottom: none; }
-
-  button.trigger {
-    width: 100%; margin-top: 18px; padding: 13px; background: linear-gradient(90deg, var(--indigo), var(--violet));
-    border: none; border-radius: 10px; color: #fff; font-weight: 600; cursor: pointer;
-    box-shadow: 0 0 24px -6px rgba(99,102,241,0.6);
-  }
-  button.trigger:disabled { opacity: 0.5; cursor: not-allowed; }
-
-  .log { font-family: var(--mono); font-size: 12.5px; line-height: 1.9; min-height: 140px; color: #cfcfe0; }
-  .log .agent-tag { color: var(--violet); }
-  .log .line { opacity: 0; animation: lineIn 0.4s ease forwards; }
-  @keyframes lineIn { to { opacity: 1; } }
-
-  .decision-box { margin-top: 16px; padding: 14px; border-radius: 10px; border: 1px solid var(--surface-border); display: none; }
-  .decision-box.show { display: block; }
-  .decision-box .name { font-weight: 600; color: var(--emerald); }
-
-  .approve-btn {
-    margin-top: 12px; width: 100%; padding: 11px; background: rgba(240,153,123,0.12);
-    border: 1px solid rgba(240,153,123,0.4); color: var(--danger); border-radius: 8px;
-    font-weight: 600; cursor: pointer; display: none;
-  }
-  .approve-btn.show { display: block; }
-
-  #error { display: none; margin-top: 14px; color: var(--danger); font-size: 13px; }
-
-  .recent-txns { margin-top: 24px; }
-  .recent-txns h2 { font-family: var(--display); font-size: 15px; margin-bottom: 14px; }
-  .txn-row {
-    display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px;
-    padding: 9px 0; border-bottom: 1px solid var(--surface-border); color: var(--text-muted);
-  }
-  .txn-row:last-child { border-bottom: none; }
-  .txn-row .vendor { color: var(--text-primary); }
-  .txn-row .amount { color: var(--emerald); }
 </style>
 </head>
 <body>
 
-  <div class="top-row">
-    <div>
-      <h1>GlassLedger Dashboard</h1>
-      <p class="sub">Simulate a shortage and watch the agent reason through vendors</p>
+<div id="app">
+  <nav id="sidebar">
+    <div class="side-brand"><span class="mark"></span>GlassLedger</div>
+    <div class="side-nav" id="sideNav"></div>
+    <div class="side-foot">
+      <div class="side-user" id="sideUser">Loading…</div>
+      <button class="side-logout" id="logoutBtn">Log out</button>
     </div>
-    <div class="ledger-stat">
-      <div class="label">Total settled</div>
-      <div class="value" id="ledgerTotal">₹0</div>
-      <div class="count" id="ledgerCount">0 transactions</div>
+  </nav>
+
+  <div id="main">
+    <div id="topbar">
+      <div>
+        <h1 id="viewTitle">Overview</h1>
+        <div class="subtitle" id="viewSubtitle">What's happening in your procurement operation right now</div>
+      </div>
+      <div class="env-note">Payments executed through Razorpay's test environment</div>
     </div>
+    <div id="content"></div>
   </div>
+</div>
 
-  <div class="grid">
+<div id="modalOverlay"><div id="modalBox"></div></div>
+<div id="toastContainer"></div>
+
+<script type="module">
+  import { auth } from "./js/firebase-config.js";
+  import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  onAuthStateChanged(auth, (user) => {
+    if (!user) window.location.href = 'auth.html';
+    else {
+      const label = user.email || user.displayName || 'Signed in';
+      document.getElementById('sideUser').textContent = label;
+      const settingsCell = document.getElementById('settingsSignedInAs');
+      if (settingsCell) settingsCell.textContent = label;
+    }
+  });
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    await signOut(auth);
+    window.location.href = 'auth.html';
+  });
+</script>
+
+<script>
+// =============================================================================
+// Global state
+// =============================================================================
+let vendorsCache = [];
+let jobsCache = [];
+let currentInventoryEventId = null;
+let currentJobId = null;
+let currentDecision = null;
+let currentSavings = 0;
+let failedVendorIds = [];
+let inventoryLevel = 100;
+let autoTriggerLock = false;
+
+const ICONS = {
+  overview: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="2.5" width="6.5" height="6.5" rx="1.2"/><rect x="11" y="2.5" width="6.5" height="6.5" rx="1.2"/><rect x="2.5" y="11" width="6.5" height="6.5" rx="1.2"/><rect x="11" y="11" width="6.5" height="6.5" rx="1.2"/></svg>',
+  inventory: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 6.2 10 2.5l7.5 3.7v7.6L10 17.5l-7.5-3.7V6.2Z"/><path d="M2.5 6.2 10 9.8l7.5-3.6M10 9.8v7.7"/></svg>',
+  requests: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="2.5" width="13" height="15" rx="1.5"/><path d="M6.5 6.5h7M6.5 10h7M6.5 13.5h4"/></svg>',
+  po: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 3.5h9l3 3v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-12a1 1 0 0 1 1-1Z"/><path d="M13 3.5v3h3"/><path d="M6.5 10h7M6.5 13h5"/></svg>',
+  history: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10.5" r="7"/><path d="M10 6.5v4l2.6 2"/><path d="M6.5 2.5 4 4.5M13.5 2.5 16 4.5"/></svg>',
+  agent: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="5" width="10" height="10" rx="2"/><path d="M10 2v3M10 15v3M2 10h3M15 10h3M4.5 4.5l2 2M13.5 13.5l2 2M4.5 15.5l2-2M13.5 6.5l2-2"/></svg>',
+  vendors: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17.5V6l5-3 5 3v11.5"/><path d="M13 17.5V9l4 2v6.5M6 9h1M6 12h1M6 15h1"/></svg>',
+  insights: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 2.5a5 5 0 0 0-3 9v1.8h6V11.5a5 5 0 0 0-3-9Z"/><path d="M8 16.5h4M8.7 14.3h2.6"/></svg>',
+  payments: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="4.5" width="15" height="11" rx="1.5"/><path d="M2.5 8h15"/><path d="M5.5 12h3"/></svg>',
+  approvals: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10.2 8 14l8-8.5"/></svg>',
+  ledger: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 3.5h12v13H4z"/><path d="M7 7h6M7 10h6M7 13h3.5"/></svg>',
+  analytics: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17V3M3 17h14"/><rect x="5.5" y="10" width="2.5" height="5"/><rect x="9.3" y="6.5" width="2.5" height="8.5"/><rect x="13.1" y="9" width="2.5" height="6"/></svg>',
+  documents: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 2.5h7l4 4v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-14a1 1 0 0 1 1-1Z"/><path d="M12 2.5v4h4"/></svg>',
+  activity: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 10.5h3.2l2-5 3 9 2-6.5 1.6 2.5H17.5"/></svg>',
+  settings: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="2.6"/><path d="M10 2.8v2M10 15.2v2M17.2 10h-2M4.8 10h-2M15.1 4.9l-1.4 1.4M6.3 13.7l-1.4 1.4M15.1 15.1l-1.4-1.4M6.3 6.3 4.9 4.9"/></svg>'
+};
+
+const NAV_SECTIONS = [
+  { items: [ { id:'overview', label:'Overview', icon:'overview', sub:"What's happening in your procurement operation right now" } ] },
+  { label:'Procurement', items: [
+    { id:'inventory', label:'Inventory', icon:'inventory', sub:'Stock levels and automatic shortage detection' },
+    { id:'requests', label:'Requests', icon:'requests', sub:'Every procurement request and its current stage' },
+    { id:'po', label:'Purchase Orders', icon:'po', sub:'Orders placed with vendors' },
+    { id:'history', label:'History', icon:'history', sub:'Completed, rejected, and failed procurement' }
+  ]},
+  { label:'Intelligence', items: [
+    { id:'agent', label:'AI Agent', icon:'agent', sub:'Control center — state, mission, and reasoning' },
+    { id:'vendors', label:'Vendors', icon:'vendors', sub:'Directory, comparison, and catalog matching' },
+    { id:'insights', label:'Insights', icon:'insights', sub:'Ask GlassLedger questions about your operation' }
+  ]},
+  { label:'Finance', items: [
+    { id:'payments', label:'Payments', icon:'payments', sub:'Transaction history and status' },
+    { id:'approvals', label:'Approvals', icon:'approvals', sub:'Procurement above the auto-approval threshold' },
+    { id:'ledger', label:'Ledger', icon:'ledger', sub:'Settled totals and full transaction record' },
+    { id:'analytics', label:'Analytics', icon:'analytics', sub:'Spend and savings over time' }
+  ]},
+  { items: [ { id:'documents', label:'Documents', icon:'documents', sub:'Purchase orders and receipts' } ] },
+  { label:'System', items: [
+    { id:'activity', label:'Activity', icon:'activity', sub:'Full audit trail of agent and user actions' },
+    { id:'settings', label:'Settings', icon:'settings', sub:'Account and spending policy' }
+  ]}
+];
+const NAV = NAV_SECTIONS.flatMap(s => s.items);
+
+document.getElementById('sideNav').innerHTML = NAV_SECTIONS.map(sec => `
+  <div class="side-section">
+    ${sec.label ? `<div class="side-section-label">${sec.label}</div>` : ''}
+    ${sec.items.map(n => `<div class="side-item" data-view="${n.id}">${ICONS[n.icon]}<span class="label">${n.label}</span></div>`).join('')}
+  </div>
+`).join('');
+
+const REFRESHERS = {
+  overview: refreshOverview, requests: refreshProcurement, vendors: refreshVendors,
+  payments: refreshPayments, ledger: refreshFinance, documents: refreshDocuments,
+  po: refreshPurchaseOrders, history: refreshHistory, approvals: refreshApprovals,
+  analytics: refreshAnalytics, activity: refreshActivity, insights: refreshInsights
+};
+
+function switchView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.side-item').forEach(s => s.classList.toggle('active', s.dataset.view === id));
+  const viewEl = document.getElementById(id + 'View');
+  viewEl.classList.add('active');
+  const nav = NAV.find(n => n.id === id);
+  document.getElementById('viewTitle').textContent = nav.label;
+  document.getElementById('viewSubtitle').textContent = nav.sub;
+  if (REFRESHERS[id]) {
+    viewEl.innerHTML = `<div class="skeleton-panel"><div class="skel-line w60"></div><div class="skel-line w40"></div><div class="skel-row"></div><div class="skel-row"></div><div class="skel-row"></div></div>`;
+    Promise.resolve(REFRESHERS[id]()).catch(err => {
+      console.error(`Failed to load ${id}:`, err);
+      viewEl.innerHTML = `<div class="panel error-panel">
+        <div class="error-icon">⚠</div>
+        <div class="error-title">Couldn't load this page</div>
+        <div class="error-msg">${(err && err.message) || 'Something went wrong talking to the server.'}</div>
+        <button class="btn btn-ghost btn-sm" onclick="switchView('${id}')">Retry</button>
+      </div>`;
+    });
+  }
+}
+document.getElementById('sideNav').addEventListener('click', (e) => {
+  const item = e.target.closest('.side-item');
+  if (item) switchView(item.dataset.view);
+});
+
+function showToast(message, type = 'success') {
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = message;
+  document.getElementById('toastContainer').appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
+function statusBadge(status) {
+  const map = {
+    reconciled: ['green','✓','Completed'], approved: ['green','✓','Approved'],
+    order_created: ['indigo','●','Processing'], guardrail_passed: ['indigo','●','Processing'],
+    awaiting_approval: ['amber','!','Approval Required'], analyzing: ['indigo','●','AI Processing'],
+    rejected: ['red','✕','Rejected'], payment_failed: ['red','✕','Failed'],
+    ai_failed: ['red','✕','Manual Review'], failed: ['red','✕','Failed']
+  };
+  const [cls, icon, text] = map[status] || ['gray','—',status];
+  return `<span class="badge ${cls}">${icon} ${text}</span>`;
+}
+
+function openModal(title, bodyHtml) {
+  document.getElementById('modalBox').innerHTML = `
+    <div class="modal-head"><h3>${title}</h3><button id="modalClose">✕</button></div>
+    ${bodyHtml}`;
+  document.getElementById('modalOverlay').classList.add('show');
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+}
+function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+document.getElementById('modalOverlay').addEventListener('click', (e) => { if (e.target.id === 'modalOverlay') closeModal(); });
+
+// =============================================================================
+// Data loaders
+// =============================================================================
+async function loadVendorsCache() {
+  const res = await fetch('/api/vendors');
+  const data = await res.json();
+  vendorsCache = data.vendors;
+  return vendorsCache;
+}
+async function loadJobsCache() {
+  const res = await fetch('/api/jobs');
+  const data = await res.json();
+  jobsCache = data.jobs;
+  return jobsCache;
+}
+
+// =============================================================================
+// OVERVIEW
+// =============================================================================
+async function refreshOverview() {
+  const [opsRes, ledgerRes, metricsRes] = await Promise.all([fetch('/api/operations-summary'), fetch('/api/ledger'), fetch('/api/metrics')]);
+  const ops = await opsRes.json();
+  const ledger = await ledgerRes.json();
+  const metrics = await metricsRes.json();
+  await loadJobsCache();
+
+  const active = jobsCache.find(j => j.status !== 'reconciled' && j.status !== 'rejected' && j.status !== 'failed');
+  const decisionTimeLabel = metrics.avgDecisionSeconds === null ? '—' : metrics.avgDecisionSeconds < 60 ? `${metrics.avgDecisionSeconds}s` : `${Math.round(metrics.avgDecisionSeconds/60)}m`;
+  const failoverLabel = metrics.vendorFailoverSuccessRate === null ? '—' : `${metrics.vendorFailoverSuccessRate}%`;
+
+  document.getElementById('overviewView').innerHTML = `
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="label">Active requests</div><div class="value indigo">${jobsCache.filter(j=>j.status!=='reconciled'&&j.status!=='rejected').length}</div></div>
+      <div class="kpi-card"><div class="label">Active purchase orders</div><div class="value indigo">${ops.activePOs}</div></div>
+      <div class="kpi-card"><div class="label">Pending approvals</div><div class="value amber">${ops.pendingApprovals}</div></div>
+      <div class="kpi-card"><div class="label">Total spend</div><div class="value green">₹${ledger.totalSettled.toLocaleString('en-IN')}</div></div>
+      <div class="kpi-card"><div class="label">Estimated savings</div><div class="value indigo">₹${(ledger.totalSaved||0).toLocaleString('en-IN')}</div></div>
+      <div class="kpi-card"><div class="label">Successful payments</div><div class="value green">${ops.successfulProcurements}</div></div>
+    </div>
+
     <div class="panel">
-      <h2>Available vendors</h2>
-      <div id="vendorList"></div>
-      <button class="trigger" id="triggerBtn">Simulate inventory shortage</button>
-      <div id="error"></div>
-
-      <div class="recent-txns">
-        <h2>Recent transactions</h2>
-        <div id="txnList" style="font-size:12.5px; color:var(--text-muted);">No transactions yet.</div>
+      <h2>Business impact</h2>
+      <div class="kpi-grid kpi-grid-secondary">
+        <div class="kpi-card"><div class="label">Straight-through rate</div><div class="value indigo">${metrics.straightThroughPct}%</div><div class="sub">${metrics.autoExecutedCount} of ${metrics.decidedCount} auto-executed</div></div>
+        <div class="kpi-card"><div class="label">Human interventions</div><div class="value amber">${metrics.humanInterventions}</div><div class="sub">required manual approval</div></div>
+        <div class="kpi-card"><div class="label">Avg decision time</div><div class="value">${decisionTimeLabel}</div><div class="sub">inventory alert → vendor selected</div></div>
+        <div class="kpi-card"><div class="label">Vendor failover success</div><div class="value ${metrics.vendorFailoverAttempts ? 'green' : ''}">${failoverLabel}</div><div class="sub">${metrics.vendorFailoverAttempts} failover event(s)</div></div>
       </div>
     </div>
 
     <div class="panel">
-      <h2>Agent mind log</h2>
-      <div class="log" id="log">Waiting for a trigger…</div>
-      <div class="decision-box" id="decisionBox">
-        <div>Decision: <span class="name" id="decisionName"></span></div>
-        <div id="decisionMeta" style="color:var(--text-muted); font-size:12.5px; margin-top:4px;"></div>
-      </div>
-      <button class="approve-btn" id="approveBtn">⚠ Requires manual approval — click to approve</button>
+      <h2>Currently active procurement</h2>
+      ${active ? `
+        <table><tbody>
+          <tr><td class="muted">Request ID</td><td class="mono">${active.jobId.slice(0,8)}</td></tr>
+          <tr><td class="muted">Item</td><td>0.5mm Copper Wire</td></tr>
+          <tr><td class="muted">Vendor</td><td>${linkVendor(active.vendorId, active.vendorName || '—')}</td></tr>
+          <tr><td class="muted">Amount</td><td>₹${active.payableAmount || 0}</td></tr>
+          <tr><td class="muted">Status</td><td>${statusBadge(active.status)}</td></tr>
+        </tbody></table>
+      ` : `<div class="empty-state"><div class="big">✓</div>No active procurement right now. Inventory is healthy.</div>`}
     </div>
-  </div>
 
-  <script>
-    const vendorList = document.getElementById('vendorList');
-    const triggerBtn = document.getElementById('triggerBtn');
-    const log = document.getElementById('log');
-    const decisionBox = document.getElementById('decisionBox');
-    const decisionName = document.getElementById('decisionName');
-    const decisionMeta = document.getElementById('decisionMeta');
-    const approveBtn = document.getElementById('approveBtn');
-    const errorEl = document.getElementById('error');
-    const ledgerTotalEl = document.getElementById('ledgerTotal');
-    const ledgerCountEl = document.getElementById('ledgerCount');
-    const txnList = document.getElementById('txnList');
+    <div class="panel">
+      <h2>Recent activity</h2>
+      ${jobsCache.slice(0,5).map(j => `
+        <div class="audit-row"><span>${j.vendorName || 'Procurement request'} · ₹${j.payableAmount || 0}</span>${statusBadge(j.status)}</div>
+      `).join('') || '<div class="empty-state">No activity yet.</div>'}
+    </div>
+  `;
+}
 
-    let currentDecision = null;
+// =============================================================================
+// INVENTORY
+// =============================================================================
+function inventoryStatusLabel() {
+  if (inventoryLevel <= 0) return ['red','Out of Stock'];
+  if (inventoryLevel <= 20) return ['red','Critical'];
+  if (inventoryLevel <= 40) return ['amber','Low'];
+  return ['green','Healthy'];
+}
+function renderInventoryView() {
+  const [cls, label] = inventoryStatusLabel();
+  document.getElementById('inventoryView').innerHTML = `
+    <div class="panel">
+      <div class="table-toolbar"><input class="search-input" placeholder="Search inventory…" disabled></div>
+      <table>
+        <thead><tr><th>Item</th><th>SKU</th><th>Available</th><th>Safety threshold</th><th>Status</th><th>Agent monitoring</th></tr></thead>
+        <tbody>
+          <tr class="clickable" onclick="switchView('inventory')">
+            <td>0.5mm Copper Wire</td><td class="mono">CU-05-IND</td>
+            <td><span id="invPct">${Math.round(inventoryLevel)}%</span></td>
+            <td class="muted">20%</td>
+            <td><span class="badge ${cls}">${label}</span></td>
+            <td><span class="badge indigo">● Active</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel">
+      <h2>0.5mm Copper Wire — detail</h2>
+      <div class="inv-track"><div class="inv-fill ${inventoryLevel<=20?'low':''}" id="invFill" style="width:${inventoryLevel}%"></div></div>
+      <div class="muted mono" style="font-size:12px;">Current stock: <span id="invPct2">${Math.round(inventoryLevel)}%</span> · Safety threshold: 20% · Reorder threshold: 20%</div>
+      <div id="invNotice" style="margin-top:14px;"></div>
+      <div class="demo-box">
+        <div class="demo-label">Demo controls</div>
+        <div class="demo-desc">Inventory depletes automatically on its own — this button is only here so judges don't have to wait. It triggers the same threshold-crossing event the agent detects on its own.</div>
+        <button class="btn btn-ghost btn-sm" id="forceShortageBtn">Force shortage now</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('forceShortageBtn').addEventListener('click', () => {
+    inventoryLevel = 15;
+    failedVendorIds = [];
+    currentInventoryEventId = crypto.randomUUID();
+    updateInventoryUI();
+    runDecisionFlow([]);
+    switchView('agent');
+  });
+}
+function updateInventoryUI() {
+  const fill = document.getElementById('invFill');
+  const pct = document.getElementById('invPct');
+  const pct2 = document.getElementById('invPct2');
+  if (fill) { fill.style.width = inventoryLevel + '%'; fill.classList.toggle('low', inventoryLevel <= 20); }
+  if (pct) pct.textContent = Math.round(inventoryLevel) + '%';
+  if (pct2) pct2.textContent = Math.round(inventoryLevel) + '%';
+  document.querySelectorAll('#inventoryView .badge.green,#inventoryView .badge.amber,#inventoryView .badge.red').forEach(badgeHost => {
+    const [cls, label] = inventoryStatusLabel();
+    badgeHost.className = `badge ${cls}`;
+    badgeHost.textContent = label;
+  });
+}
+setInterval(() => {
+  if (autoTriggerLock) return;
+  inventoryLevel = Math.max(0, inventoryLevel - 2);
+  updateInventoryUI();
+  if (inventoryLevel <= 20) {
+    failedVendorIds = [];
+    currentInventoryEventId = crypto.randomUUID();
+    runDecisionFlow([]).then(() => { inventoryLevel = 100; updateInventoryUI(); });
+  }
+}, 1500);
 
-    async function loadVendors() {
-      const res = await fetch('/api/vendors');
-      const data = await res.json();
-      vendorList.innerHTML = data.vendors.map(v =>
-        `<div class="vendor-row"><span>${v.name}</span><span>₹${v.cost} · ${v.deliveryDays}d</span></div>`
-      ).join('');
+// =============================================================================
+// PROCUREMENT — Requests
+// =============================================================================
+let requestsSort = { key: null, dir: 1 };
+function renderRequestsTable(filterText) {
+  const host = document.getElementById('requestsTableHost');
+  if (!host) return;
+  let rows = jobsCache.filter(j => !filterText ||
+    (j.vendorName || '').toLowerCase().includes(filterText) ||
+    j.jobId.toLowerCase().includes(filterText) ||
+    j.status.toLowerCase().includes(filterText));
+  if (requestsSort.key) {
+    rows = rows.slice().sort((a, b) => {
+      const av = a[requestsSort.key] ?? '', bv = b[requestsSort.key] ?? '';
+      return (av > bv ? 1 : av < bv ? -1 : 0) * requestsSort.dir;
+    });
+  }
+  host.innerHTML = rows.length ? `
+    <table>
+      <thead><tr>
+        <th class="sortable" data-key="jobId">Request</th>
+        <th>Item</th>
+        <th class="sortable" data-key="payableAmount">Priority</th>
+        <th class="sortable" data-key="vendorName">Vendor</th>
+        <th class="sortable" data-key="payableAmount">Amount</th>
+        <th class="sortable" data-key="status">Status</th>
+      </tr></thead>
+      <tbody>${rows.map(j => `
+        <tr class="clickable" onclick="openJobDetail('${j.jobId}')">
+          <td class="mono">${j.jobId.slice(0,8)}</td>
+          <td>0.5mm Copper Wire</td>
+          <td>${j.payableAmount > 10000 ? 'High' : 'Normal'}</td>
+          <td>${linkVendor(j.vendorId, j.vendorName || '—')}</td>
+          <td>₹${j.payableAmount || 0}</td>
+          <td>${statusBadge(j.status)}</td>
+        </tr>`).join('')}</tbody>
+    </table>
+  ` : `<div class="empty-state"><div class="big">📋</div>No procurement requests match.</div>`;
+  host.querySelectorAll('th.sortable').forEach(th => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.key;
+      requestsSort.dir = requestsSort.key === key ? -requestsSort.dir : 1;
+      requestsSort.key = key;
+      renderRequestsTable(document.getElementById('requestsSearch').value.trim().toLowerCase());
+    });
+  });
+}
+async function refreshProcurement() {
+  await loadJobsCache();
+  document.getElementById('requestsView').innerHTML = `
+    <div class="panel">
+      <h2>Procurement requests</h2>
+      <div class="table-toolbar">
+        <input class="search-input" id="requestsSearch" placeholder="Search by vendor, ID, or status…">
+        <span class="muted" style="font-size:11.5px;">${jobsCache.length} total</span>
+      </div>
+      <div id="requestsTableHost"></div>
+    </div>
+  `;
+  renderRequestsTable('');
+  document.getElementById('requestsSearch').addEventListener('input', (e) => renderRequestsTable(e.target.value.trim().toLowerCase()));
+}
+
+// =============================================================================
+// PROCUREMENT — Purchase Orders
+// =============================================================================
+async function refreshPurchaseOrders() {
+  await loadJobsCache();
+  const pos = jobsCache.filter(j => j.poNumber);
+  document.getElementById('poView').innerHTML = `
+    <div class="panel">
+      <h2>Purchase orders</h2>
+      ${pos.length ? `
+        <table>
+          <thead><tr><th>PO Number</th><th>Procurement ID</th><th>Vendor</th><th>Item</th><th>Amount</th><th>Status</th><th>Payment</th></tr></thead>
+          <tbody>${pos.map(j => `
+            <tr class="clickable" onclick="openJobDetail('${j.jobId}')">
+              <td class="mono">${j.poNumber}</td>
+              <td class="mono">${j.jobId.slice(0,8)}</td>
+              <td>${linkVendor(j.vendorId, j.vendorName || '—')}</td>
+              <td>0.5mm Copper Wire</td>
+              <td>₹${j.payableAmount || 0}</td>
+              <td>${statusBadge(j.status)}</td>
+              <td>${j.paymentId ? statusBadge('reconciled') : statusBadge('awaiting_approval')}</td>
+            </tr>`).join('')}</tbody>
+        </table>
+      ` : `<div class="empty-state"><div class="big">🧾</div>No purchase orders yet.</div>`}
+    </div>
+  `;
+}
+
+// =============================================================================
+// PROCUREMENT — History
+// =============================================================================
+async function refreshHistory() {
+  await loadJobsCache();
+  const done = jobsCache.filter(j => ['reconciled','rejected','failed','payment_failed','ai_failed'].includes(j.status));
+  document.getElementById('historyView').innerHTML = `
+    <div class="panel">
+      <h2>Procurement history</h2>
+      ${done.length ? `
+        <table>
+          <thead><tr><th>Request</th><th>Vendor</th><th>Amount</th><th>Outcome</th></tr></thead>
+          <tbody>${done.map(j => `
+            <tr class="clickable" onclick="openJobDetail('${j.jobId}')">
+              <td class="mono">${j.jobId.slice(0,8)}</td>
+              <td>${linkVendor(j.vendorId, j.vendorName || '—')}</td>
+              <td>₹${j.payableAmount || 0}</td>
+              <td>${statusBadge(j.status)}</td>
+            </tr>`).join('')}</tbody>
+        </table>
+      ` : `<div class="empty-state"><div class="big">🗂️</div>Nothing completed yet.</div>`}
+    </div>
+  `;
+}
+
+const LIFECYCLE_STAGES = [
+  { key: 'inventory_threshold_crossed', label: 'Detected' },
+  { key: 'vendor_selected', label: 'AI Decision' },
+  { key: ['guardrail_passed','guardrail_blocked'], label: 'Policy Check' },
+  { key: 'approval_received', label: 'Approval', optional: true },
+  { key: 'purchase_order_created', label: 'Purchase Order', recordField: 'poNumber' },
+  { key: 'razorpay_order_created', label: 'Razorpay Order', recordField: 'orderId' },
+  { key: ['signature_verified','payment_received'], label: 'Payment Verified', recordField: 'paymentId' },
+  { key: 'ledger_reconciled', label: 'Ledger Reconciled' },
+  { key: 'receipt_generated', label: 'Receipt', recordField: 'receiptNumber' }
+];
+function findEvent(job, key) {
+  const keys = Array.isArray(key) ? key : [key];
+  return job.events.find(e => keys.includes(e.event));
+}
+const LC_NOT_YET = {
+  'AI Decision': 'AI has not evaluated vendors yet.', 'Policy Check': 'Policy has not been evaluated yet.',
+  'Approval': 'No approval required — order passed policy automatically.',
+  'Purchase Order': 'Purchase order not created yet.', 'Razorpay Order': 'Razorpay order not created yet.',
+  'Payment Verified': 'Payment not created yet.', 'Ledger Reconciled': 'Ledger has not been reconciled yet — payment not verified.',
+  'Receipt': 'Receipt not generated yet — awaiting verified payment.'
+};
+function lifecycleAction(stageLabel, job) {
+  if (stageLabel === 'Purchase Order') return `downloadPO('${job.jobId}')`;
+  if (stageLabel === 'Receipt') return `downloadReceipt('${job.jobId}')`;
+  if (stageLabel === 'Razorpay Order' || stageLabel === 'Payment Verified') return `flashPaymentInfo()`;
+  if (stageLabel === 'Ledger Reconciled') return `closeModal(); location.hash='#/ledger/${job.jobId}';`;
+  return null;
+}
+function buildLifecycleHtml(job) {
+  let reachedCurrent = false;
+  const rows = LIFECYCLE_STAGES.map(stage => {
+    if (stage.optional && !findEvent(job, 'approval_requested')) return null; // skip approval step if never required
+    const ev = findEvent(job, stage.key);
+    const failed = ev && ev.status === 'blocked' && stage.label === 'Policy Check';
+    const done = !!ev;
+    const recordVal = stage.recordField ? job[stage.recordField] : null;
+    let stateClass = done ? (failed ? 'lc-warn' : 'lc-done') : 'lc-pending';
+    let isCurrent = false;
+    if (!done && !reachedCurrent && job.status !== 'failed' && job.status !== 'rejected') { isCurrent = true; reachedCurrent = true; stateClass = 'lc-current'; }
+    const action = done ? lifecycleAction(stage.label, job) : null;
+    return `
+      <div class="lc-row ${stateClass}${action ? ' clickable' : ''}" ${action ? `data-lc-action="${action.replace(/"/g,'&quot;')}"` : ''}>
+        <div class="lc-dot"></div>
+        <div class="lc-body">
+          <div class="lc-top"><span class="lc-label">${stage.label}${failed ? ' — approval required' : ''}</span>${ev ? `<span class="lc-time">${new Date(ev.timestamp).toLocaleString()}</span>` : isCurrent ? `<span class="lc-time">in progress…</span>` : ''}</div>
+          ${recordVal ? `<div class="lc-record mono">${recordVal}</div>` : ''}
+          ${!done && !isCurrent ? `<div class="lc-notyet">${LC_NOT_YET[stage.label] || 'Not reached yet.'}</div>` : ''}
+        </div>
+      </div>`;
+  }).filter(Boolean).join('');
+  return `<div class="lc-track">${rows}</div>`;
+}
+document.getElementById('modalOverlay').addEventListener('click', (e) => {
+  const row = e.target.closest('.lc-row[data-lc-action]');
+  if (row) new Function(row.dataset.lcAction)();
+});
+function flashPaymentInfo() {
+  document.querySelectorAll('#modalBox tr').forEach(tr => {
+    if (tr.textContent.includes('Razorpay') || tr.textContent.includes('Payment')) {
+      tr.classList.add('lc-flash');
+      setTimeout(() => tr.classList.remove('lc-flash'), 1200);
     }
+  });
+}
+window.flashPaymentInfo = flashPaymentInfo;
 
-    async function loadLedger() {
-      const res = await fetch('/api/ledger');
-      const ledger = await res.json();
-      ledgerTotalEl.textContent = '₹' + ledger.totalSettled.toLocaleString('en-IN');
-      ledgerCountEl.textContent = `${ledger.transactions.length} transaction${ledger.transactions.length === 1 ? '' : 's'}`;
+async function openJobDetail(jobId) {
+  const res = await fetch('/api/jobs/' + jobId);
+  const { job, activityLog } = await res.json();
+  const actions = [];
+  if (job.status === 'awaiting_approval') {
+    actions.push(`<button class="btn btn-green" onclick="approveJob('${job.jobId}')">Approve</button>`);
+    actions.push(`<button class="btn btn-danger" onclick="rejectJob('${job.jobId}')">Reject</button>`);
+  }
+  if (job.poNumber) actions.push(`<button class="btn btn-ghost" onclick="downloadPO('${job.jobId}')">View Purchase Order</button>`);
+  if (job.receiptNumber) actions.push(`<button class="btn btn-ghost" onclick="downloadReceipt('${job.jobId}')">View Receipt</button>`);
 
-      if (ledger.transactions.length === 0) {
-        txnList.innerHTML = 'No transactions yet.';
-      } else {
-        const recent = ledger.transactions.slice(-5).reverse();
-        txnList.innerHTML = recent.map(t =>
-          `<div class="txn-row"><span class="vendor">${t.vendor}</span><span class="amount">₹${t.amount}</span></div>`
-        ).join('');
-      }
+  const firedRulesHtml = (job.policyResult && job.policyResult.firedRules && job.policyResult.firedRules.length)
+    ? `<div class="policy-rules">
+        <div class="policy-rules-label">Policy rule(s) fired</div>
+        <div class="policy-rule-combined">${job.policyResult.firedRules.map(r => r.rule).join(' + ')}</div>
+        ${job.policyResult.firedRules.map(r => `
+        <div class="policy-rule-row"><span class="badge amber">${r.rule}</span><span class="policy-rule-detail">${r.detail || ''}</span></div>`).join('')}
+      </div>`
+    : '';
+
+  const sigEvent = job.events.find(e => e.event === 'signature_verified');
+  const verificationHtml = sigEvent
+    ? (sigEvent.status === 'ok'
+        ? `<div class="verify-badge verify-ok">Signature Verified ✓</div>`
+        : `<div class="verify-badge verify-fail">Verification Failed ✗<div class="verify-fail-msg">Payment signature verification failed. Ledger not updated.</div></div>`)
+    : '';
+
+  openModal(`Procurement ${job.jobId.slice(0,8)}`, `
+    <table style="margin-bottom:14px;"><tbody>
+      <tr><td class="muted">Vendor</td><td>${linkVendor(job.vendorId, job.vendorName || '—')}</td></tr>
+      <tr><td class="muted">Amount</td><td>₹${job.payableAmount || 0}</td></tr>
+      <tr><td class="muted">Status</td><td>${statusBadge(job.status)}</td></tr>
+      <tr><td class="muted">PO Number</td><td class="mono">${job.poNumber || '—'}</td></tr>
+      <tr><td class="muted">Receipt Number</td><td class="mono">${job.receiptNumber || '—'}</td></tr>
+      <tr><td class="muted">Razorpay Order ID</td><td class="mono">${job.orderId || '—'}</td></tr>
+      <tr><td class="muted">Razorpay Payment ID</td><td class="mono">${job.paymentId || '—'}</td></tr>
+    </tbody></table>
+    ${verificationHtml}
+    ${firedRulesHtml}
+    <h3 style="font-size:13px; margin:14px 0 8px;">Lifecycle</h3>
+    ${buildLifecycleHtml(job)}
+    <h3 style="font-size:13px; margin:16px 0 8px;">Full activity log</h3>
+    <div class="activity-log">${activityLog.map(l => `<div class="line ok">• ${l}</div>`).join('')}</div>
+    <div class="btn-row" style="margin-top:16px;">${actions.join('')}</div>
+  `);
+}
+window.openJobDetail = openJobDetail;
+
+// =============================================================================
+// AI AGENT — control center + live decision flow
+// =============================================================================
+const STATES = ['Monitoring','Inventory alert','Vendor analysis','Vendor selected','Guardrail check','Payment','Payment verification','Reconciliation'];
+
+function renderAgentView() {
+  document.getElementById('agentView').innerHTML = `
+    <div class="panel">
+      <h2>Agent status <span class="agent-badge" id="agentActiveBadge"><span class="agent-badge-dot"></span>IDLE</span></h2>
+      <div class="state-row">
+        <div class="state-pill idle" id="statePill">Monitoring</div>
+        <div class="state-steps" id="stateSteps">${STATES.map((_,i)=>`<div class="state-dot" data-idx="${i}"></div>`).join('')}</div>
+      </div>
+      <div class="muted" style="font-size:12.5px;">Current task: <span id="currentTaskLabel">Idle — watching inventory levels</span></div>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <h2>Activity / audit trail</h2>
+        <div class="activity-log" id="agentLog">No activity yet. Trigger a shortage from Inventory to see the agent work.</div>
+        <div class="approval-reason" id="approvalReason" style="display:none;"></div>
+        <div class="btn-row" id="approvalActions" style="display:none; margin-top:10px;">
+          <button class="btn btn-green" id="approveBtn">Approve</button>
+          <button class="btn btn-danger" id="rejectBtn">Reject</button>
+        </div>
+        <button class="btn btn-ghost" id="failoverBtn" style="display:none; margin-top:10px; width:100%;">⚡ Simulate vendor connection failure</button>
+      </div>
+
+      <div class="panel">
+        <h2>Vendor cost comparison</h2>
+        <div id="comparisonTable" class="comparison-table"><div class="empty-state">No decision made yet.</div></div>
+      </div>
+    </div>
+  `;
+  document.getElementById('approveBtn').addEventListener('click', () => approveJob(currentJobId));
+  document.getElementById('rejectBtn').addEventListener('click', () => rejectJob(currentJobId));
+  document.getElementById('failoverBtn').addEventListener('click', onFailoverClick);
+}
+
+function setState(stateName, mode) {
+  const pill = document.getElementById('statePill');
+  if (!pill) return;
+  pill.textContent = stateName;
+  pill.className = 'state-pill' + (mode === 'failure' ? ' failure' : mode === 'success' ? ' success' : mode === 'idle' ? ' idle' : '');
+  const badge = document.getElementById('agentActiveBadge');
+  if (badge) {
+    const isActive = mode !== 'idle';
+    badge.classList.toggle('active', isActive);
+    badge.innerHTML = `<span class="agent-badge-dot"></span>${isActive ? 'ACTIVE' : 'IDLE'}`;
+  }
+  const idx = STATES.indexOf(stateName);
+  document.querySelectorAll('.state-dot').forEach((dot,i) => {
+    dot.classList.remove('done','activeDot');
+    if (mode === 'failure' || idx === -1) return;
+    if (i < idx) dot.classList.add('done');
+    if (i === idx) dot.classList.add('activeDot');
+  });
+}
+function setFailureState(label, recoveryLabel, fn) {
+  const pill = document.getElementById('statePill');
+  if (pill) { pill.textContent = label; pill.className = 'state-pill failure'; }
+  const existing = document.getElementById('recoveryBtn');
+  if (existing) existing.remove();
+  const btn = document.createElement('button');
+  btn.id = 'recoveryBtn'; btn.className = 'recovery-btn'; btn.textContent = recoveryLabel;
+  btn.onclick = () => { btn.remove(); fn(); };
+  const row = document.querySelector('#agentView .state-row');
+  if (row) row.appendChild(btn);
+}
+function renderAgentLog(lines) {
+  const el = document.getElementById('agentLog');
+  if (!el) return;
+  el.innerHTML = lines.map((l,i) => {
+    const cls = l.toLowerCase().includes('fail') || l.toLowerCase().includes('blocked') || l.toLowerCase().includes('eliminated') ? 'blocked'
+      : l.toLowerCase().includes('rationale') ? 'rationale' : 'ok';
+    return `<div class="line ${cls}" style="animation-delay:${i*0.06}s">• ${l}</div>`;
+  }).join('');
+}
+function renderComparisonTable(comparison, chosenVendorId) {
+  const el = document.getElementById('comparisonTable');
+  if (!el) return;
+  if (!comparison) { el.innerHTML = '<div class="empty-state">No decision made yet.</div>'; return; }
+  el.innerHTML = `<table class="comparison-table"><thead><tr><th>Vendor</th><th>Price</th><th>Ship</th><th>Downtime</th><th>Risk</th><th>Total</th></tr></thead>
+    <tbody>${comparison.map(b => `<tr class="${b.vendorId===chosenVendorId?'chosen':''}">
+      <td>${b.vendorName}</td><td>₹${b.purchasePrice}</td><td>₹${b.shippingCost}</td><td>₹${b.downtimeCost}</td><td>₹${b.riskCost}</td><td>₹${b.totalExpectedCost}</td>
+    </tr>`).join('')}</tbody></table>`;
+}
+
+async function runDecisionFlow(excludeVendorIds) {
+  if (autoTriggerLock) return;
+  autoTriggerLock = true;
+  if (!document.getElementById('agentView').innerHTML) renderAgentView();
+  document.getElementById('approvalActions').style.display = 'none';
+  document.getElementById('approvalReason').style.display = 'none';
+  document.getElementById('failoverBtn').style.display = 'none';
+  document.getElementById('currentTaskLabel').textContent = 'Analyzing new procurement request…';
+
+  setState('Inventory alert');
+  await new Promise(r => setTimeout(r, 350));
+  setState('Vendor analysis');
+  document.getElementById('agentLog').textContent = 'Agent thinking…';
+
+  let data;
+  try {
+    const res = await fetch('/api/decide', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ inventoryEventId: currentInventoryEventId, excludeVendorIds })
+    });
+    data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Decision failed');
+    if (data.alreadyProcessed) {
+      renderAgentLog(data.activityLog);
+      showToast(data.message, 'error');
+      setState('Monitoring', 'idle');
+      autoTriggerLock = false;
+      return;
     }
-
-    loadVendors();
-    loadLedger();
-
-    function renderLog(lines) {
-      log.innerHTML = '';
-      lines.forEach((text, idx) => {
-        const div = document.createElement('div');
-        div.className = 'line';
-        div.style.animationDelay = (idx * 0.35) + 's';
-        div.innerHTML = text.replace('[Agent]:', '<span class="agent-tag">[Agent]:</span>');
-        log.appendChild(div);
-      });
-    }
-
-    async function startPayment(vendor) {
-      errorEl.style.display = 'none';
-      const res = await fetch('/api/create-order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ vendorId: vendor.id })
-      });
-      const order = await res.json();
-      if (!res.ok) {
-        errorEl.textContent = order.error;
-        errorEl.style.display = 'block';
-        return;
-      }
-
-      const options = {
-        key: order.keyId,
-        amount: order.amount,
-        currency: order.currency,
-        name: 'GlassLedger',
-        description: `Procurement order — ${order.vendorName}`,
-        order_id: order.orderId,
-        handler: async function (response) {
-          decisionMeta.textContent += ' — verifying payment…';
-
-          const verifyRes = await fetch('/api/verify-payment', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-              vendor: vendor
-            })
-          });
-          const result = await verifyRes.json();
-
-          if (result.verified) {
-            decisionMeta.textContent = `₹${vendor.cost} · ${vendor.deliveryDays} day delivery — ✅ settled, ledger total ₹${result.ledgerTotal}`;
-            loadLedger();
-          } else {
-            decisionMeta.textContent = `₹${vendor.cost} · ${vendor.deliveryDays} day delivery — ⚠ verification failed`;
-          }
-        },
-        theme: { color: '#6366f1' }
-      };
-
-      const rzp = new Razorpay(options);
-      rzp.open();
-    }
-
-    triggerBtn.addEventListener('click', async () => {
-      errorEl.style.display = 'none';
-      decisionBox.classList.remove('show');
-      approveBtn.classList.remove('show');
-      triggerBtn.disabled = true;
-      log.textContent = 'Agent thinking…';
-
+  } catch (err) {
+    setFailureState('AI failure', 'Engage safe fallback', async () => {
+      setState('Vendor analysis');
       try {
-        const res = await fetch('/api/decide', { method: 'POST' });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Decision failed');
-
-        currentDecision = data.decision;
-        renderLog(data.reasoning);
-        decisionName.textContent = data.decision.name;
-        decisionMeta.textContent = `₹${data.decision.cost} · ${data.decision.deliveryDays} day delivery`;
-        decisionBox.classList.add('show');
-
-        if (data.requiresApproval) {
-          approveBtn.classList.add('show');
-        } else {
-          startPayment(data.decision);
-        }
-      } catch (err) {
-        errorEl.textContent = err.message;
-        errorEl.style.display = 'block';
-        log.textContent = 'Agent hit an error.';
-      } finally {
-        triggerBtn.disabled = false;
+        const fbRes = await fetch('/api/decide-fallback', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ inventoryEventId: currentInventoryEventId, excludeVendorIds })
+        });
+        const fbData = await fbRes.json();
+        if (!fbRes.ok) throw new Error(fbData.error || 'Fallback failed');
+        showToast('Safe fallback engaged — deterministic selection used, manual review required', 'error');
+        applyDecision(fbData);
+      } catch (fbErr) {
+        showToast(fbErr.message, 'error');
+        setState('Monitoring', 'idle');
+        autoTriggerLock = false;
       }
     });
+    return;
+  }
+  applyDecision(data);
+}
 
-    approveBtn.addEventListener('click', () => {
-      approveBtn.textContent = '✅ Approved — proceeding to payment';
-      approveBtn.disabled = true;
-      startPayment(currentDecision);
+function applyDecision(data) {
+  currentJobId = data.jobId;
+  currentDecision = data.decision;
+  currentSavings = data.savings || 0;
+  renderAgentLog(data.activityLog);
+  renderComparisonTable(data.costComparison, data.decision.id);
+  document.getElementById('currentTaskLabel').textContent = `Procuring 0.5mm Copper Wire — evaluating ${data.decision.name}`;
+  document.getElementById('failoverBtn').style.display = 'block';
+  setState('Vendor selected');
+
+  setTimeout(() => {
+    setState('Guardrail check');
+    setTimeout(() => {
+      if (data.requiresApproval) {
+        document.getElementById('approvalReason').textContent = data.approvalReason;
+        document.getElementById('approvalReason').style.display = 'block';
+        document.getElementById('approvalActions').style.display = 'flex';
+      } else {
+        startPayment(data.decision, data.jobId);
+      }
+      autoTriggerLock = false;
+    }, 450);
+  }, 350);
+}
+
+function onFailoverClick() {
+  const btn = document.getElementById('failoverBtn');
+  btn.disabled = true;
+  const failedVendor = currentDecision;
+  setFailureState('Vendor failure', 'Re-evaluate vendors', async () => {
+    renderAgentLog([`ERROR — connection timeout contacting ${failedVendor.name}`]);
+    showToast(`${failedVendor.name} unreachable`, 'error');
+    await new Promise(r => setTimeout(r, 700));
+    await fetch('/api/record-vendor-failure', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ jobId: currentJobId, vendorId: failedVendor.id, vendorName: failedVendor.name, reason:'connection timeout' })
     });
-  </script>
+    failedVendorIds.push(failedVendor.id);
+    setState('Vendor analysis');
+    btn.disabled = false;
+    runDecisionFlow(failedVendorIds);
+  });
+}
+
+async function approveJob(jobId) {
+  document.getElementById('approvalActions') && (document.getElementById('approvalActions').style.display = 'none');
+  await fetch('/api/audit-decision', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ jobId, decision:'approved' }) });
+  const jobRes = await fetch('/api/jobs/' + jobId);
+  const { job } = await jobRes.json();
+  await loadVendorsCache();
+  const vendor = vendorsCache.find(v => v.id === job.vendorId);
+  showToast('Approved — proceeding to payment', 'success');
+  closeModal();
+  startPayment(vendor, jobId);
+}
+window.approveJob = approveJob;
+
+async function rejectJob(jobId) {
+  document.getElementById('approvalActions') && (document.getElementById('approvalActions').style.display = 'none');
+  document.getElementById('approvalReason') && (document.getElementById('approvalReason').style.display = 'none');
+  await fetch('/api/audit-decision', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ jobId, decision:'rejected' }) });
+  showToast('Procurement rejected — no payment made', 'error');
+  setState('Monitoring', 'idle');
+  closeModal();
+}
+window.rejectJob = rejectJob;
+
+// =============================================================================
+// PAYMENTS
+// =============================================================================
+async function startPayment(vendor, jobId) {
+  setState('Payment');
+  const res = await fetch('/api/create-order', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ jobId }) });
+  const order = await res.json();
+  if (!res.ok) {
+    setFailureState('Payment failure', 'Retry payment', () => startPayment(vendor, jobId));
+    showToast(order.error || 'Order creation failed', 'error');
+    return;
+  }
+  const options = {
+    key: order.keyId, amount: order.amount, currency: order.currency, name:'GlassLedger',
+    description: `Procurement — ${order.vendorName} (PO ${order.poNumber || ''})`, order_id: order.orderId,
+    modal: { ondismiss: () => setFailureState('Payment failure', 'Retry payment', () => startPayment(vendor, jobId)) },
+    handler: async (response) => {
+      setState('Payment verification');
+      const verifyRes = await fetch('/api/verify-payment', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ jobId, razorpay_order_id: response.razorpay_order_id, razorpay_payment_id: response.razorpay_payment_id, razorpay_signature: response.razorpay_signature })
+      });
+      const result = await verifyRes.json();
+      if (result.verified) {
+        setState('Reconciliation', 'success');
+        showToast(`Payment settled — ₹${vendor.cost} to ${vendor.name} (test environment)`, 'success');
+        setTimeout(() => setState('Monitoring', 'idle'), 2200);
+      } else {
+        setFailureState('Payment failure', 'Manual review', () => setState('Monitoring', 'idle'));
+        showToast(result.error || 'Payment could not be verified. The ledger has not been updated.', 'error');
+      }
+    },
+    theme: { color:'#6366f1' }
+  };
+  const rzp = new Razorpay(options);
+  rzp.on('payment.failed', () => setFailureState('Payment failure', 'Retry payment', () => startPayment(vendor, jobId)));
+  rzp.open();
+}
+
+let paymentsSearch = '';
+async function refreshPayments() {
+  const [ledgerRes] = await Promise.all([fetch('/api/ledger')]);
+  const ledger = await ledgerRes.json();
+  await loadJobsCache();
+  const pending = jobsCache.filter(j => j.status === 'awaiting_approval');
+
+  document.getElementById('paymentsView').innerHTML = `
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="label">Total processed</div><div class="value green">₹${ledger.totalSettled.toLocaleString('en-IN')}</div></div>
+      <div class="kpi-card"><div class="label">Successful</div><div class="value green">${ledger.transactions.length}</div></div>
+      <div class="kpi-card"><div class="label">Pending approval</div><div class="value amber">${pending.length}</div></div>
+      <div class="kpi-card"><div class="label">Failed</div><div class="value">${jobsCache.filter(j=>j.status==='payment_failed').length}</div></div>
+    </div>
+
+    <div class="panel">
+      <h2>Transactions <button class="action-btn" style="text-decoration:none;" onclick="switchView('approvals')" ${pending.length ? '' : 'disabled'}>${pending.length} awaiting approval →</button></h2>
+      <div class="table-toolbar"><input class="search-input" id="paymentsSearch" placeholder="Search by vendor or ID…"></div>
+      <div id="paymentsTableHost"></div>
+    </div>
+
+    ${jobsCache.filter(j=>j.status==='payment_failed').length ? `
+    <div class="panel">
+      <h2>Failed payments</h2>
+      <table>
+        <thead><tr><th>Procurement</th><th>Vendor</th><th>Amount</th><th>Verification</th></tr></thead>
+        <tbody>${jobsCache.filter(j=>j.status==='payment_failed').map(j => `
+          <tr class="clickable" onclick="openJobDetail('${j.jobId}')">
+            <td class="mono">${j.jobId.slice(0,8)}</td>
+            <td>${linkVendor(j.vendorId, j.vendorName || '—')}</td>
+            <td>₹${j.payableAmount || 0}</td>
+            <td><span class="verify-badge verify-fail" style="margin:0; display:inline-block;">Verification Failed ✗</span></td>
+          </tr>`).join('')}</tbody>
+      </table>
+    </div>` : ''}
+  `;
+  const renderTxns = (filterText) => {
+    const host = document.getElementById('paymentsTableHost');
+    const rows = ledger.transactions.slice().reverse().filter(t => !filterText ||
+      t.vendor.toLowerCase().includes(filterText) || t.paymentId.toLowerCase().includes(filterText) || (t.jobId||'').toLowerCase().includes(filterText));
+    host.innerHTML = rows.length ? `
+      <table>
+        <thead><tr><th>Payment ID</th><th>Vendor</th><th>Procurement</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody>${rows.map(t => `
+          <tr class="clickable" onclick="openJobDetail('${t.jobId||''}')">
+            <td class="mono">${t.paymentId.slice(0,14)}…</td>
+            <td>${linkVendor((jobsCache.find(j=>j.jobId===t.jobId)||{}).vendorId, t.vendor)}</td>
+            <td class="mono">${(t.jobId||'').slice(0,8)}</td>
+            <td>₹${t.amount}</td>
+            <td>${statusBadge('reconciled')}</td>
+            <td class="muted">${new Date(t.timestamp).toLocaleDateString()}</td>
+          </tr>`).join('')}</tbody>
+      </table>` : `<div class="empty-state"><div class="big">💳</div>No transactions match.</div>`;
+  };
+  renderTxns('');
+  document.getElementById('paymentsSearch').addEventListener('input', (e) => renderTxns(e.target.value.trim().toLowerCase()));
+}
+
+// =============================================================================
+// APPROVAL CENTER
+// =============================================================================
+async function refreshApprovals() {
+  await Promise.all([loadJobsCache(), loadVendorsCache()]);
+  const pending = jobsCache.filter(j => j.status === 'awaiting_approval');
+  document.getElementById('approvalsView').innerHTML = `
+    <div class="panel">
+      <h2>Pending approvals <span class="badge amber">${pending.length}</span></h2>
+      ${pending.length ? pending.map(j => {
+        const vendor = vendorsCache.find(v => v.id === j.vendorId) || {};
+        const fired = (j.policyResult && j.policyResult.firedRules) || [];
+        return `
+        <div class="panel" style="background:rgba(255,255,255,0.02); margin-bottom:12px;">
+          <table style="margin-bottom:10px;"><tbody>
+            <tr><td class="muted">Procurement ID</td><td class="mono">${j.jobId.slice(0,8)}</td></tr>
+            <tr><td class="muted">Item</td><td>0.5mm Copper Wire</td></tr>
+            <tr><td class="muted">Recommended vendor</td><td>${linkVendor(j.vendorId, j.vendorName || '—')}</td></tr>
+            <tr><td class="muted">Amount</td><td>₹${j.payableAmount}</td></tr>
+            <tr><td class="muted">Delivery</td><td>${vendor.deliveryDays ? vendor.deliveryDays + ' days' : '—'}</td></tr>
+            <tr><td class="muted">Reliability</td><td>${vendor.reliabilityScore ? Math.round(vendor.reliabilityScore*100)+'%' : '—'}</td></tr>
+          </tbody></table>
+          <div class="policy-rules">
+            <div class="policy-rules-label">Policy rule(s) fired</div>
+            ${fired.length ? `<div class="policy-rule-combined">${fired.map(r => r.rule).join(' + ')}</div>` + fired.map(r => `
+              <div class="policy-rule-row">
+                <span class="badge amber">${r.rule}</span>
+                <span class="policy-rule-detail">${r.detail || r.description || ''}</span>
+              </div>`).join('') : `<div class="approval-reason">${(j.policyResult && j.policyResult.explanation) || 'Payable amount exceeds the ₹10,000 backend guardrail — human approval required by policy, not by the AI.'}</div>`}
+          </div>
+          <div class="btn-row" style="margin-top:12px;">
+            <button class="btn btn-green" onclick="approveJob('${j.jobId}')">Approve</button>
+            <button class="btn btn-danger" onclick="rejectJob('${j.jobId}')">Reject</button>
+          </div>
+        </div>`;
+      }).join('') : `<div class="empty-state"><div class="big">✓</div>Nothing waiting on you right now.</div>`}
+    </div>
+  `;
+}
+
+// =============================================================================
+// VENDORS
+// =============================================================================
+// =============================================================================
+// CONNECTED RECORDS — clickable links between vendor / job / ledger records
+// =============================================================================
+function linkVendor(vendorId, label) {
+  if (!vendorId) return label || '—';
+  return `<a href="#/vendor/${vendorId}" class="rec-link" onclick="event.stopPropagation()">${label}</a>`;
+}
+async function openVendorDetail(vendorId) {
+  await Promise.all([loadVendorsCache(), loadJobsCache()]);
+  const vendor = vendorsCache.find(v => v.id === vendorId);
+  if (!vendor) { showToast('Vendor not found', 'error'); return; }
+  const perfRes = await fetch('/api/vendor-performance');
+  const { performance } = await perfRes.json();
+  const perf = performance.find(p => p.vendorId === vendorId) || {};
+  const history = jobsCache.filter(j => j.vendorId === vendorId).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  const assessmentBits = [];
+  if (vendor.reliabilityScore >= 0.9) assessmentBits.push('high reliability');
+  else if (vendor.reliabilityScore >= 0.75) assessmentBits.push('moderate reliability');
+  else assessmentBits.push('below-average reliability');
+  if (vendor.deliveryDays <= 2) assessmentBits.push('fast delivery');
+  else if (vendor.deliveryDays > 5) assessmentBits.push('slower delivery');
+  if (!vendor.available) assessmentBits.push('currently unavailable');
+  const assessment = `Based on recorded data: ${assessmentBits.join(', ')}. ${perf.orderCount || 0} order(s) on file, ₹${perf.totalSpend || 0} total spend.`;
+
+  openModal(`${vendor.name}`, `
+    <table style="margin-bottom:14px;"><tbody>
+      <tr><td class="muted">Vendor ID</td><td class="mono">${vendor.id}</td></tr>
+      <tr><td class="muted">Category</td><td>${vendor.category}</td></tr>
+      <tr><td class="muted">Status</td><td><span class="badge ${vendor.available ? 'green' : 'red'}">${vendor.available ? '✓ Active' : '✕ Unavailable'}</span></td></tr>
+      <tr><td class="muted">Reliability score</td><td>${Math.round((vendor.reliabilityScore||0)*100)}%</td></tr>
+      <tr><td class="muted">Avg delivery</td><td>${vendor.deliveryDays} day(s)</td></tr>
+      <tr><td class="muted">On-time rate</td><td>${perf.onTimeRate != null ? perf.onTimeRate + '%' : '—'}</td></tr>
+      <tr><td class="muted">Unit cost</td><td>₹${vendor.cost} + ₹${vendor.shippingCost} shipping</td></tr>
+      <tr><td class="muted">Total spend on file</td><td>₹${perf.totalSpend || 0}</td></tr>
+    </tbody></table>
+    <h3 style="font-size:13px; margin-bottom:8px;">AI assessment <span class="muted" style="font-weight:400; font-size:10.5px;">(from recorded data only)</span></h3>
+    <div class="approval-reason" style="color:var(--text-muted); background:rgba(255,255,255,0.025); border-color:var(--surface-border);">${assessment}</div>
+    <h3 style="font-size:13px; margin:16px 0 8px;">Order history</h3>
+    ${history.length ? `
+      <table>
+        <thead><tr><th>Date</th><th>Procurement</th><th>Amount</th><th>Status</th></tr></thead>
+        <tbody>${history.map(j => `
+          <tr class="clickable" onclick="closeModal(); openJobDetail('${j.jobId}')">
+            <td class="muted">${j.createdAt ? new Date(j.createdAt).toLocaleDateString() : '—'}</td>
+            <td class="mono">${j.jobId.slice(0,8)}</td>
+            <td>₹${j.payableAmount || 0}</td>
+            <td>${statusBadge(j.status)}</td>
+          </tr>`).join('')}</tbody>
+      </table>` : `<div class="empty-state">No orders recorded for this vendor yet.</div>`}
+  `);
+}
+window.openVendorDetail = openVendorDetail;
+
+// =============================================================================
+// HASH ROUTING — deep-linkable records (#/vendor/:id, #/procurement/:jobId, etc.)
+// =============================================================================
+function handleRoute() {
+  const hash = location.hash;
+  const m = hash.match(/^#\/(vendor|procurement|po|payment|receipt|ledger)\/(.+)$/);
+  if (!m) return;
+  const [, kind, id] = m;
+  const routeMap = { vendor: 'vendors', procurement: 'requests', po: 'po', payment: 'payments', receipt: 'documents', ledger: 'ledger' };
+  switchView(routeMap[kind] || 'overview');
+  setTimeout(() => {
+    if (kind === 'vendor') openVendorDetail(id);
+    else openJobDetail(id);
+  }, 60);
+}
+window.addEventListener('hashchange', handleRoute);
+
+// =============================================================================
+// VENDORS
+// =============================================================================
+async function refreshVendors() {
+  await loadVendorsCache();
+  const perfRes = await fetch('/api/vendor-performance');
+  const { performance } = await perfRes.json();
+
+  document.getElementById('vendorsView').innerHTML = `
+    <div class="panel">
+      <h2>Vendor directory</h2>
+      <div class="table-toolbar"><input class="search-input" id="vendorSearch" placeholder="Search by vendor or category…"></div>
+      <div id="vendorTableHost"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Vendor cost comparison — latest decision</h2>
+      <div id="vendorComparisonTable">${document.getElementById('comparisonTable') ? document.getElementById('comparisonTable').innerHTML : '<div class="empty-state">No decision made yet — trigger a shortage first.</div>'}</div>
+    </div>
+
+    <div class="panel">
+      <h2>Semantic catalog matcher</h2>
+      <p class="muted" style="font-size:12.5px; margin-bottom:12px;">Different vendors list "0.5mm Copper Wire" under inconsistent names. The agent resolves them semantically.</p>
+      <button class="btn btn-primary" id="matchBtn">Match vendor catalog</button>
+      <div id="matchResults" style="margin-top:14px;"></div>
+    </div>
+  `;
+  const renderVendorTable = (filterText) => {
+    const host = document.getElementById('vendorTableHost');
+    const rows = performance.filter(p => !filterText || p.name.toLowerCase().includes(filterText) || p.category.toLowerCase().includes(filterText));
+    host.innerHTML = rows.length ? `
+      <table>
+        <thead><tr><th>Vendor</th><th>Category</th><th>Status</th><th>Reliability</th><th>Avg delivery</th><th>Orders</th><th>Total spend</th></tr></thead>
+        <tbody>${rows.map(p => `
+          <tr class="clickable" onclick="openVendorDetail('${p.vendorId}')"><td>${p.name}</td><td class="muted">${p.category}</td><td><span class="badge ${p.status==='Active'?'green':'red'}">${p.status==='Active'?'✓ Active':'✕ Unavailable'}</span></td>
+          <td>${p.onTimeRate}%</td><td>${p.averageDeliveryDays}d</td><td>${p.orderCount}</td><td>₹${p.totalSpend}</td></tr>`).join('')}</tbody>
+      </table>` : `<div class="empty-state">No vendors match.</div>`;
+  };
+  renderVendorTable('');
+  document.getElementById('vendorSearch').addEventListener('input', (e) => renderVendorTable(e.target.value.trim().toLowerCase()));
+  document.getElementById('matchBtn').addEventListener('click', async () => {
+    const el = document.getElementById('matchResults');
+    el.innerHTML = 'Matching…';
+    try {
+      const res = await fetch('/api/match-catalog', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ requiredItem:'0.5mm Copper Wire' }) });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      el.innerHTML = data.matches.map(m => `
+        <div class="match-row"><span class="mono muted">${m.listingName}</span>
+        <span class="badge ${m.isMatch?'green':'red'}">${m.isMatch?'✓ match':'✗ different'} ${Math.round(m.confidence*100)}%</span></div>`).join('');
+    } catch (err) { el.textContent = 'Error: ' + err.message; }
+  });
+}
+
+// =============================================================================
+// FINANCE — Ledger
+// =============================================================================
+async function refreshFinance() {
+  const res = await fetch('/api/ledger');
+  const ledger = await res.json();
+  await loadJobsCache();
+  const avgTxn = ledger.transactions.length ? Math.round(ledger.totalSettled / ledger.transactions.length) : 0;
+
+  document.getElementById('ledgerView').innerHTML = `
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="label">Total settled</div><div class="value green">₹${ledger.totalSettled.toLocaleString('en-IN')}</div></div>
+      <div class="kpi-card"><div class="label">Estimated savings</div><div class="value indigo">₹${(ledger.totalSaved||0).toLocaleString('en-IN')}</div></div>
+      <div class="kpi-card"><div class="label">Transactions</div><div class="value">${ledger.transactions.length}</div></div>
+      <div class="kpi-card"><div class="label">Avg transaction</div><div class="value">₹${avgTxn}</div></div>
+    </div>
+
+    <div class="panel">
+      <h2>Financial ledger <button class="action-btn" id="exportCsvBtn">Export CSV</button></h2>
+      <div class="table-toolbar"><input class="search-input" id="ledgerSearch" placeholder="Search by vendor, ID, or PO…"></div>
+      <div id="ledgerTableHost"></div>
+    </div>
+  `;
+  const renderLedgerTable = (filterText) => {
+    const host = document.getElementById('ledgerTableHost');
+    const rows = ledger.transactions.slice().reverse().filter(t => !filterText ||
+      t.vendor.toLowerCase().includes(filterText) || (t.jobId||'').toLowerCase().includes(filterText) || (t.poNumber||'').toLowerCase().includes(filterText));
+    host.innerHTML = rows.length ? `
+      <table>
+        <thead><tr><th>Date</th><th>Transaction</th><th>Vendor</th><th>Procurement</th><th>Amount</th><th>Status</th><th>Receipt</th></tr></thead>
+        <tbody>${rows.map(t => `
+          <tr class="clickable" onclick="openJobDetail('${t.jobId||''}')">
+            <td class="muted">${new Date(t.timestamp).toLocaleDateString()}</td>
+            <td class="mono">${t.paymentId.slice(0,12)}…</td>
+            <td>${linkVendor((jobsCache.find(j=>j.jobId===t.jobId)||{}).vendorId, t.vendor)}</td>
+            <td class="mono">${(t.jobId||'').slice(0,8)}</td>
+            <td>₹${t.amount}</td>
+            <td>${statusBadge('reconciled')}</td>
+            <td class="mono muted">${(t.poNumber)||'—'}</td>
+          </tr>`).join('')}</tbody>
+      </table>` : `<div class="empty-state"><div class="big">📊</div>No ledger entries match.</div>`;
+  };
+  renderLedgerTable('');
+  document.getElementById('ledgerSearch').addEventListener('input', (e) => renderLedgerTable(e.target.value.trim().toLowerCase()));
+  document.getElementById('exportCsvBtn').addEventListener('click', () => {
+    if (!ledger.transactions.length) { showToast('No transactions to export yet', 'error'); return; }
+    const header = 'Transaction ID,Date,Vendor,Amount,Payment Status,Procurement ID,Razorpay Order ID,Razorpay Payment ID\n';
+    const rows = ledger.transactions.map(t => `${t.paymentId},${t.timestamp},"${t.vendor}",${t.amount},reconciled,${t.jobId||''},${t.orderId},${t.paymentId}`).join('\n');
+    const blob = new Blob([header+rows], { type:'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = `glassledger_ledger_${Date.now()}.csv`; a.click();
+    URL.revokeObjectURL(url);
+  });
+}
+
+// =============================================================================
+// FINANCE — Analytics
+// =============================================================================
+function barChart(labels, values, prefix) {
+  const max = Math.max(1, ...values);
+  return `<div class="bar-chart">${labels.map((l,i) => `
+    <div class="bar-col">
+      <div class="bar-value">${prefix}${values[i].toLocaleString('en-IN')}</div>
+      <div class="bar" style="height:${Math.max(3, (values[i]/max)*120)}px;"></div>
+      <div class="bar-label">${l}</div>
+    </div>`).join('')}</div>`;
+}
+async function refreshAnalytics() {
+  const res = await fetch('/api/ledger');
+  const ledger = await res.json();
+  const txns = ledger.transactions;
+
+  // spend by day (last 7 entries chronological)
+  const byDay = {};
+  txns.forEach(t => { const d = new Date(t.timestamp).toLocaleDateString('en-IN',{month:'short',day:'numeric'}); byDay[d] = (byDay[d]||0) + t.amount; });
+  const dayLabels = Object.keys(byDay).slice(-7);
+  const dayValues = dayLabels.map(l => byDay[l]);
+
+  // spend by vendor
+  const byVendor = {};
+  txns.forEach(t => { byVendor[t.vendor] = (byVendor[t.vendor]||0) + t.amount; });
+  const vendorLabels = Object.keys(byVendor).slice(0,6);
+  const vendorValues = vendorLabels.map(l => byVendor[l]);
+
+  document.getElementById('analyticsView').innerHTML = `
+    <div class="two-col">
+      <div class="panel">
+        <h2>Spend over time</h2>
+        ${dayLabels.length ? barChart(dayLabels, dayValues, '₹') : '<div class="empty-state">No spend data yet.</div>'}
+      </div>
+      <div class="panel">
+        <h2>Spend by vendor</h2>
+        ${vendorLabels.length ? barChart(vendorLabels, vendorValues, '₹') : '<div class="empty-state">No spend data yet.</div>'}
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Summary</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="label">Total transactions</div><div class="value">${txns.length}</div></div>
+        <div class="kpi-card"><div class="label">Total settled</div><div class="value green">₹${ledger.totalSettled.toLocaleString('en-IN')}</div></div>
+        <div class="kpi-card"><div class="label">Total savings</div><div class="value indigo">₹${(ledger.totalSaved||0).toLocaleString('en-IN')}</div></div>
+      </div>
+    </div>
+  `;
+}
+
+// =============================================================================
+// INTELLIGENCE — Insights (Ask GlassLedger)
+// =============================================================================
+async function refreshInsights() {
+  document.getElementById('insightsView').innerHTML = `
+    <div class="panel ask-panel">
+      <h2>Ask GlassLedger</h2>
+      <p class="muted" style="font-size:12.5px; margin-bottom:12px;">Ask questions about your actual spend, vendors, and history — answered from real ledger data, not fabricated figures.</p>
+      <div class="ask-row"><input type="text" id="askInput" placeholder="e.g. how much have we spent this week?"><button class="btn btn-primary" id="askBtn">Ask</button></div>
+      <div id="askAnswer"></div>
+    </div>
+  `;
+  document.getElementById('askBtn').addEventListener('click', async () => {
+    const q = document.getElementById('askInput').value.trim();
+    if (!q) return;
+    const el = document.getElementById('askAnswer');
+    el.textContent = 'Thinking…';
+    try {
+      const res = await fetch('/api/ask', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ question:q }) });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      el.textContent = data.answer;
+    } catch (err) { el.textContent = 'Error: ' + err.message; }
+  });
+}
+
+// =============================================================================
+// SYSTEM — Activity / Audit Trail
+// =============================================================================
+const EVENT_LABELS = {
+  inventory_threshold_crossed: 'Inventory threshold crossed', vendors_analyzed: 'Vendors analyzed',
+  vendor_eliminated: 'Vendor eliminated (ineligible)', vendor_selected: 'Vendor selected',
+  agent_rationale: 'Agent rationale recorded', guardrail_passed: 'Policy check passed',
+  guardrail_blocked: 'Policy check — approval required', approval_requested: 'Approval requested',
+  approval_received: 'Approval decision received', vendor_failure: 'Vendor failure detected',
+  vendor_failover: 'Vendor failover — re-evaluated & re-routed', ai_fallback_engaged: 'AI fallback engaged',
+  duplicate_blocked: 'Duplicate event blocked', purchase_order_created: 'Purchase order created',
+  razorpay_order_created: 'Razorpay order created', payment_received: 'Payment received',
+  signature_verified: 'Payment signature verified', ledger_reconciled: 'Ledger reconciled',
+  receipt_generated: 'Receipt generated'
+};
+async function refreshActivity() {
+  const res = await fetch('/api/audit-log');
+  const { entries } = await res.json();
+  document.getElementById('activityView').innerHTML = `
+    <div class="panel">
+      <h2>Activity / audit trail</h2>
+      ${entries.length ? `
+        <table>
+          <thead><tr><th>Time</th><th>Event</th><th>Procurement</th><th>Vendor</th><th>Amount</th><th>Outcome</th></tr></thead>
+          <tbody>${entries.map(e => `
+            <tr class="clickable" onclick="openJobDetail('${e.jobId}')">
+              <td class="muted">${new Date(e.timestamp).toLocaleString()}</td>
+              <td>${EVENT_LABELS[e.event] || e.event}</td>
+              <td class="mono">${e.jobId.slice(0,8)}</td>
+              <td>${e.vendorName || '—'}</td>
+              <td>${e.amount ? '₹'+e.amount : '—'}</td>
+              <td>${statusBadge(e.outcome === 'blocked' ? 'rejected' : e.outcome === 'ok' ? 'reconciled' : e.outcome)}</td>
+            </tr>`).join('')}</tbody>
+        </table>` : `<div class="empty-state"><div class="big">📜</div>No activity recorded yet.</div>`}
+    </div>
+  `;
+}
+
+// =============================================================================
+// DOCUMENTS
+// =============================================================================
+async function refreshDocuments() {
+  await loadJobsCache();
+  const docs = jobsCache.filter(j => j.poNumber || j.receiptNumber);
+  document.getElementById('documentsView').innerHTML = `
+    <div class="panel">
+      <h2>Purchase orders &amp; receipts</h2>
+      ${docs.length ? `
+        <table>
+          <thead><tr><th>PO Number</th><th>Receipt Number</th><th>Vendor</th><th>Amount</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>${docs.map(j => `
+            <tr>
+              <td class="mono">${j.poNumber||'—'}</td>
+              <td class="mono">${j.receiptNumber||'—'}</td>
+              <td>${j.vendorName}</td>
+              <td>₹${j.payableAmount}</td>
+              <td>${statusBadge(j.status)}</td>
+              <td class="btn-row">
+                ${j.poNumber ? `<button class="btn btn-ghost" onclick="downloadPO('${j.jobId}')">PO PDF</button>` : ''}
+                ${j.receiptNumber ? `<button class="btn btn-ghost" onclick="downloadReceipt('${j.jobId}')">Receipt PDF</button>` : ''}
+              </td>
+            </tr>`).join('')}</tbody>
+        </table>` : `<div class="empty-state"><div class="big">📄</div>No documents generated yet.</div>`}
+    </div>
+  `;
+}
+
+async function downloadPO(jobId) {
+  const res = await fetch('/api/jobs/' + jobId);
+  const { job } = await res.json();
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.setFontSize(18); doc.text('GlassLedger', 20, 20);
+  doc.setFontSize(11); doc.text('Purchase Order', 20, 28);
+  doc.setFontSize(10);
+  doc.text(`PO Number: ${job.poNumber}`, 20, 45);
+  doc.text(`Procurement ID: ${job.jobId}`, 20, 53);
+  doc.text(`Vendor: ${job.vendorName}`, 20, 61);
+  doc.text(`Item: 0.5mm Copper Wire`, 20, 69);
+  doc.text(`Amount: Rs. ${job.payableAmount}`, 20, 77);
+  doc.text(`Status: ${job.status}`, 20, 85);
+  doc.setFontSize(9); doc.setTextColor(140);
+  doc.text('GlassLedger — autonomous procurement, test environment', 20, 105);
+  doc.save(`${job.poNumber}.pdf`);
+}
+window.downloadPO = downloadPO;
+
+async function downloadReceipt(jobId) {
+  const res = await fetch('/api/jobs/' + jobId);
+  const { job } = await res.json();
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.setFontSize(18); doc.text('GlassLedger', 20, 20);
+  doc.setFontSize(11); doc.text('Payment Receipt', 20, 28);
+  doc.setFontSize(10);
+  doc.text(`Receipt Number: ${job.receiptNumber}`, 20, 45);
+  doc.text(`Date: ${new Date().toLocaleString()}`, 20, 53);
+  doc.text(`Vendor: ${job.vendorName}`, 20, 61);
+  doc.text(`Procurement ID: ${job.jobId}`, 20, 69);
+  doc.text(`PO Number: ${job.poNumber}`, 20, 77);
+  doc.text(`Amount Paid: Rs. ${job.payableAmount}`, 20, 85);
+  doc.text(`Razorpay Order ID: ${job.orderId}`, 20, 93);
+  doc.text(`Razorpay Payment ID: ${job.paymentId}`, 20, 101);
+  doc.text(`Verification Status: Signature Verified`, 20, 109);
+  doc.setFontSize(9); doc.setTextColor(140);
+  doc.text('GlassLedger — payment executed through Razorpay test environment', 20, 128);
+  doc.save(`${job.receiptNumber}.pdf`);
+}
+window.downloadReceipt = downloadReceipt;
+
+// =============================================================================
+// SETTINGS
+// =============================================================================
+function renderSettingsView() {
+  document.getElementById('settingsView').innerHTML = `
+    <div class="panel">
+      <h2>Account</h2>
+      <table><tbody>
+        <tr><td class="muted">Signed in as</td><td class="mono" id="settingsSignedInAs">${document.getElementById('sideUser').textContent}</td></tr>
+        <tr><td class="muted">Workspace</td><td>GlassLedger Demo Workspace</td></tr>
+      </tbody></table>
+    </div>
+    <div class="panel">
+      <h2>Spending policy</h2>
+      <table><tbody>
+        <tr><td class="muted">Auto-approval threshold</td><td>₹10,000 (enforced server-side, not by AI)</td></tr>
+        <tr><td class="muted">Above threshold</td><td>Requires human approval</td></tr>
+      </tbody></table>
+    </div>
+    <div class="panel">
+      <h2>Sign out</h2>
+      <button class="btn btn-danger" id="settingsLogout">Log out of GlassLedger</button>
+    </div>
+  `;
+  document.getElementById('settingsLogout').addEventListener('click', () => document.getElementById('logoutBtn').click());
+}
+
+// =============================================================================
+// Init — build all view containers, load first view
+// =============================================================================
+const content = document.getElementById('content');
+content.innerHTML = NAV.map(n => `<div class="view" id="${n.id}View"></div>`).join('');
+renderAgentView();
+renderInventoryView();
+renderSettingsView();
+switchView('overview');
+if (location.hash) handleRoute();
+</script>
 
 </body>
 </html>

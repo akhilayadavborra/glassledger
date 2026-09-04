@@ -1,0 +1,3877 @@
+{
+  "jobs": [
+    {
+      "jobId": "dacf0a66-85d9-47a7-9b8a-8da3d9bba372",
+      "inventoryEventId": "dab4bcd0-7ecd-4df5-8f88-0fc28610ac15",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "guardrail_passed",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-01T06:27:56.459Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-01T06:27:56.460Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-01T06:27:56.460Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-01T06:27:57.486Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B’s total expected cost (≈$6,254) is far lower than Vendor A ($12,116) and Vendor C ($14,760)."
+          },
+          "timestamp": "2026-09-01T06:27:57.486Z"
+        },
+        {
+          "event": "guardrail_passed",
+          "status": "ok",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000
+          },
+          "timestamp": "2026-09-01T06:27:57.486Z"
+        }
+      ]
+    },
+    {
+      "jobId": "e2b39531-6d2c-4ee9-8f12-985b695b0ff7",
+      "inventoryEventId": "66f3e7b4-059b-4d2e-8ad4-91fd38036539",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "guardrail_passed",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-01T06:28:05.798Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-01T06:28:05.799Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-01T06:28:05.799Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-01T06:28:06.705Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B’s total expected cost ( $6,254 ) is far lower than Vendor A ($12,116) and Vendor C ($14,760)."
+          },
+          "timestamp": "2026-09-01T06:28:06.705Z"
+        },
+        {
+          "event": "guardrail_passed",
+          "status": "ok",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000
+          },
+          "timestamp": "2026-09-01T06:28:06.705Z"
+        }
+      ]
+    },
+    {
+      "jobId": "499a339f-9be3-4e03-9c48-616258fb1196",
+      "inventoryEventId": "123c964c-dfd3-40e1-b47b-c4ab8a4a6d05",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "guardrail_passed",
+      "vendorId": "vendor_a",
+      "vendorName": "Vendor A — CopperCo",
+      "payableAmount": 4150,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-01T06:28:09.294Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-01T06:28:09.294Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-01T06:28:09.294Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-01T06:28:09.881Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B’s total expected cost (≈$6,254) is far lower than Vendor A ($12,116) and Vendor C ($14,760), mainly because its downtime cost is dramatically smaller."
+          },
+          "timestamp": "2026-09-01T06:28:09.881Z"
+        },
+        {
+          "event": "guardrail_passed",
+          "status": "ok",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000
+          },
+          "timestamp": "2026-09-01T06:28:09.881Z"
+        },
+        {
+          "event": "vendor_failure",
+          "status": "failed",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "reason": "connection timeout"
+          },
+          "timestamp": "2026-09-01T06:28:30.270Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-01T06:28:30.907Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 2,
+            "totalCount": 3
+          },
+          "timestamp": "2026-09-01T06:28:30.908Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_a",
+            "vendorName": "Vendor A — CopperCo",
+            "totalExpectedCost": 12116
+          },
+          "timestamp": "2026-09-01T06:28:31.589Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor A’s total expected cost (12,116) is lower than Vendor C’s (14,760), despite a higher purchase price."
+          },
+          "timestamp": "2026-09-01T06:28:31.589Z"
+        },
+        {
+          "event": "guardrail_passed",
+          "status": "ok",
+          "meta": {
+            "payableAmount": 4150,
+            "threshold": 10000
+          },
+          "timestamp": "2026-09-01T06:28:31.589Z"
+        }
+      ]
+    },
+    {
+      "jobId": "f35457bb-ca50-48c9-abab-5fe9e7e495c6",
+      "inventoryEventId": "491a0933-37ee-41e1-994d-6fe4addd6830",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "guardrail_passed",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-01T06:29:12.277Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-01T06:29:12.277Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-01T06:29:12.277Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-01T06:29:13.351Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost at $6,254, far below the others."
+          },
+          "timestamp": "2026-09-01T06:29:13.351Z"
+        },
+        {
+          "event": "guardrail_passed",
+          "status": "ok",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000
+          },
+          "timestamp": "2026-09-01T06:29:13.351Z"
+        }
+      ]
+    },
+    {
+      "jobId": "1cbbf4c5-9a76-4745-afff-a6edc9bba71f",
+      "inventoryEventId": "2141998c-f9d7-49d1-921f-bb95cb3359c1",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "guardrail_passed",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-01T06:30:14.804Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-01T06:30:14.804Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-01T06:30:14.804Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-01T06:30:15.701Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost (6,254) despite a higher purchase price, because its downtime and risk costs are far lower and it ships in 1 day."
+          },
+          "timestamp": "2026-09-01T06:30:15.701Z"
+        },
+        {
+          "event": "guardrail_passed",
+          "status": "ok",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000
+          },
+          "timestamp": "2026-09-01T06:30:15.701Z"
+        }
+      ]
+    },
+    {
+      "jobId": "2a486d04-3818-4a41-b78c-e238b9c3cd43",
+      "inventoryEventId": "4fbeaa84-fed2-4769-866e-37eb013f808c",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "guardrail_passed",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-01T06:31:38.778Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-01T06:31:38.778Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-01T06:31:38.778Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-01T06:31:39.942Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B’s total expected cost ($6,254) is far lower than Vendor A ($12,116) and Vendor C ($14,760), making it the most cost‑effective option overall."
+          },
+          "timestamp": "2026-09-01T06:31:39.942Z"
+        },
+        {
+          "event": "guardrail_passed",
+          "status": "ok",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000
+          },
+          "timestamp": "2026-09-01T06:31:39.942Z"
+        }
+      ]
+    },
+    {
+      "jobId": "ed76a406-1c37-4c1d-b242-2e46fce8f0c7",
+      "inventoryEventId": "5dfe387a-5e48-42a2-8d14-488b69807153",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "guardrail_passed",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-01T06:39:44.970Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-01T06:39:44.974Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-01T06:39:44.974Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-01T06:39:45.962Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost at $6,254, far less than Vendor A’s $12,116 and Vendor C’s $14,760."
+          },
+          "timestamp": "2026-09-01T06:39:45.962Z"
+        },
+        {
+          "event": "guardrail_passed",
+          "status": "ok",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000
+          },
+          "timestamp": "2026-09-01T06:39:45.962Z"
+        }
+      ]
+    },
+    {
+      "jobId": "e4278f31-97c5-4516-a59b-aea598c2d744",
+      "inventoryEventId": "c733aac5-0c27-4b32-8502-8ac527930a5c",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "guardrail_passed",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-03T05:06:34.715Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-03T05:06:34.716Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-03T05:06:34.716Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-03T05:06:35.456Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost at $6,254, far below the others despite a slightly higher purchase price than Vendor A."
+          },
+          "timestamp": "2026-09-03T05:06:35.457Z"
+        },
+        {
+          "event": "guardrail_passed",
+          "status": "ok",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000
+          },
+          "timestamp": "2026-09-03T05:06:35.457Z"
+        }
+      ]
+    },
+    {
+      "jobId": "ddc6a7c8-cb32-46a1-b2fa-f0482f293211",
+      "inventoryEventId": "d17ddebf-4c1c-45a1-b71d-96a376c3df7e",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "guardrail_passed",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-03T05:07:37.491Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-03T05:07:37.496Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-03T05:07:37.496Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-03T05:07:38.531Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B’s total expected cost (6,254) is far lower than Vendor A (12,116) and Vendor C (14,760), despite a higher purchase price."
+          },
+          "timestamp": "2026-09-03T05:07:38.532Z"
+        },
+        {
+          "event": "guardrail_passed",
+          "status": "ok",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000
+          },
+          "timestamp": "2026-09-03T05:07:38.532Z"
+        }
+      ]
+    },
+    {
+      "jobId": "953caae4-a6a5-4ece-bf4d-a94d23d99a5f",
+      "inventoryEventId": "b6867263-f8ac-4c93-a732-872cdcce96d2",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "guardrail_passed",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-03T05:11:29.463Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-03T05:11:29.464Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-03T05:11:29.464Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-03T05:11:30.503Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B’s total expected cost ($6,254) is far lower than Vendor A ($12,116) and Vendor C ($14,760)."
+          },
+          "timestamp": "2026-09-03T05:11:30.503Z"
+        },
+        {
+          "event": "guardrail_passed",
+          "status": "ok",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000
+          },
+          "timestamp": "2026-09-03T05:11:30.503Z"
+        }
+      ]
+    },
+    {
+      "jobId": "607d0ab8-7433-4280-9d81-a775d640be48",
+      "inventoryEventId": "4014581a-77d1-4bf2-a86a-bd3c0c19d4d7",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "guardrail_passed",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-03T05:13:53.449Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-03T05:13:53.450Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-03T05:13:53.450Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-03T05:13:54.387Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost (6,254) despite a higher purchase price than Vendor A, because its downtime and risk costs are far lower due to fast delivery and good reliability."
+          },
+          "timestamp": "2026-09-03T05:13:54.387Z"
+        },
+        {
+          "event": "guardrail_passed",
+          "status": "ok",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000
+          },
+          "timestamp": "2026-09-03T05:13:54.387Z"
+        }
+      ]
+    },
+    {
+      "jobId": "c7d41f78-c6e9-4723-9ca4-3025dc1a1ab5",
+      "inventoryEventId": "9e6517a1-5379-4448-8cc1-d1f3f8d370cd",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "guardrail_passed",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-03T05:16:04.474Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-03T05:16:04.474Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-03T05:16:04.474Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-03T05:16:05.291Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost at $6,254, far below the others despite a slightly higher purchase price."
+          },
+          "timestamp": "2026-09-03T05:16:05.291Z"
+        },
+        {
+          "event": "guardrail_passed",
+          "status": "ok",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000
+          },
+          "timestamp": "2026-09-03T05:16:05.291Z"
+        }
+      ]
+    },
+    {
+      "jobId": "f7be1f8b-8ad4-4f06-b73f-8defa9b1ecd8",
+      "inventoryEventId": "4c4d661a-5c04-44f7-87e4-0b27bc7d8d84",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "guardrail_passed",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-03T05:19:01.717Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-03T05:19:01.717Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-03T05:19:01.717Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-03T05:19:02.919Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost (6,254) despite a higher purchase price than Vendor A, because its downtime and risk costs are dramatically lower due to fast 1‑day delivery and higher reliability."
+          },
+          "timestamp": "2026-09-03T05:19:02.919Z"
+        },
+        {
+          "event": "guardrail_passed",
+          "status": "ok",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000
+          },
+          "timestamp": "2026-09-03T05:19:02.919Z"
+        }
+      ]
+    },
+    {
+      "jobId": "4e3d7426-1ffa-4730-ad7a-56aa4714e38c",
+      "inventoryEventId": "e9b44728-1838-4ba5-bced-b78895664f2d",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "awaiting_approval",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T06:06:12.532Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T06:06:12.533Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T06:06:12.533Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T06:06:13.561Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B’s total expected cost (6,254) is far lower than Vendor A (12,116) and Vendor C (14,760), despite a higher purchase price."
+          },
+          "timestamp": "2026-09-04T06:06:13.561Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly"
+            ]
+          },
+          "timestamp": "2026-09-04T06:06:13.664Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly"
+            ]
+          },
+          "timestamp": "2026-09-04T06:06:13.664Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹61,350 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": true,
+            "detail": "Today's cumulative spend would reach ₹4,400 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹61,350 (limit ₹50,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly."
+      }
+    },
+    {
+      "jobId": "b74e57b1-b2c6-497b-8ee1-d360246f376d",
+      "inventoryEventId": "a33e6fe2-5bb3-4677-93a0-320db3253a61",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "approved",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T06:06:15.288Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T06:06:15.288Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T06:06:15.288Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T06:06:16.052Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B’s total expected cost (≈$6,254) is far lower than Vendor A ($12,116) and Vendor C ($14,760), despite a higher purchase price than Vendor A."
+          },
+          "timestamp": "2026-09-04T06:06:16.052Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly"
+            ]
+          },
+          "timestamp": "2026-09-04T06:06:16.052Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly"
+            ]
+          },
+          "timestamp": "2026-09-04T06:06:16.052Z"
+        },
+        {
+          "event": "approval_received",
+          "status": "approved",
+          "meta": {
+            "decision": "approved"
+          },
+          "timestamp": "2026-09-04T06:06:20.248Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹65,750 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": true,
+            "detail": "Today's cumulative spend would reach ₹8,800 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹65,750 (limit ₹50,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly."
+      }
+    },
+    {
+      "jobId": "1f8a5de1-cd4d-44ee-b5b9-83dd8a131e3d",
+      "inventoryEventId": "d41554f6-3a5b-4d9f-9a94-a577d60f2dcc",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "awaiting_approval",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T06:06:41.302Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T06:06:41.302Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T06:06:41.302Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T06:06:42.043Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost (6,254) despite a higher purchase price than Vendor A, because its downtime and risk costs are far lower."
+          },
+          "timestamp": "2026-09-04T06:06:42.043Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly"
+            ]
+          },
+          "timestamp": "2026-09-04T06:06:42.044Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly"
+            ]
+          },
+          "timestamp": "2026-09-04T06:06:42.044Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹70,150 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": true,
+            "detail": "Today's cumulative spend would reach ₹13,200 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹70,150 (limit ₹50,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly."
+      }
+    },
+    {
+      "jobId": "65d3b220-8eb5-4032-a8e8-29236f8ba746",
+      "inventoryEventId": "22ee5d3c-1809-441d-8bb7-1ef8e7b58076",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "approved",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T06:06:43.780Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T06:06:43.780Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T06:06:43.780Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T06:06:45.067Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has a higher purchase price than Vendor A but its downtime cost is dramatically lower, reducing the overall expense."
+          },
+          "timestamp": "2026-09-04T06:06:45.067Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly"
+            ]
+          },
+          "timestamp": "2026-09-04T06:06:45.068Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly"
+            ]
+          },
+          "timestamp": "2026-09-04T06:06:45.068Z"
+        },
+        {
+          "event": "approval_received",
+          "status": "approved",
+          "meta": {
+            "decision": "approved"
+          },
+          "timestamp": "2026-09-04T06:06:47.578Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹74,550 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": true,
+            "detail": "Today's cumulative spend would reach ₹17,600 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹74,550 (limit ₹50,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly."
+      }
+    },
+    {
+      "jobId": "c05d4726-745e-4328-a01a-320e51b3337c",
+      "inventoryEventId": "56cb3ef5-f327-437d-8e24-144fc4209f72",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "approved",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T06:06:59.580Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T06:06:59.580Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T06:06:59.580Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T06:07:00.554Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost at $6,254, far below the others despite a slightly higher purchase price."
+          },
+          "timestamp": "2026-09-04T06:07:00.554Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly"
+            ]
+          },
+          "timestamp": "2026-09-04T06:07:00.555Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly"
+            ]
+          },
+          "timestamp": "2026-09-04T06:07:00.555Z"
+        },
+        {
+          "event": "approval_received",
+          "status": "approved",
+          "meta": {
+            "decision": "approved"
+          },
+          "timestamp": "2026-09-04T06:07:27.685Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹78,950 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": true,
+            "detail": "Today's cumulative spend would reach ₹22,000 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹78,950 (limit ₹50,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly."
+      }
+    },
+    {
+      "jobId": "edf676ce-69fe-41a5-9749-6e9c1673627a",
+      "inventoryEventId": "e9ab9c76-89b3-4cab-b9de-70559dde2ce2",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "approved",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T06:07:01.785Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T06:07:01.785Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T06:07:01.785Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T06:07:02.597Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B’s total expected cost (≈$6,254) is far lower than Vendor A ($12,116) and Vendor C ($14,760) despite a higher purchase price."
+          },
+          "timestamp": "2026-09-04T06:07:02.597Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:07:02.597Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:07:02.597Z"
+        },
+        {
+          "event": "approval_received",
+          "status": "approved",
+          "meta": {
+            "decision": "approved"
+          },
+          "timestamp": "2026-09-04T06:07:04.728Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹83,350 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹26,400 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹83,350 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹26,400 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "35ffcafa-5b3f-49ce-bd8b-c71ffd331992",
+      "inventoryEventId": "0979aeee-3192-40ef-a741-f0156f201105",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "awaiting_approval",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T06:08:03.284Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T06:08:03.284Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T06:08:03.284Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T06:08:04.057Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost (6,254) despite a higher purchase price than Vendor A, because its downtime cost is dramatically lower and it ships in 1 day."
+          },
+          "timestamp": "2026-09-04T06:08:04.057Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:08:04.057Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:08:04.057Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹87,750 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹30,800 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹87,750 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹30,800 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "8963a263-b797-4ffc-9c15-3697eeeec7e1",
+      "inventoryEventId": "3ca81eee-469a-47b5-8107-9674b0389433",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "awaiting_approval",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T06:08:12.609Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T06:08:12.609Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T06:08:12.609Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T06:08:13.446Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost (6,254) despite a higher purchase price than Vendor A, because its downtime and risk costs are far lower due to fast delivery and reliability."
+          },
+          "timestamp": "2026-09-04T06:08:13.446Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:08:13.447Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:08:13.447Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹92,150 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹35,200 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹92,150 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹35,200 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "7d8e52ab-96b1-416e-8a45-9889375b15f1",
+      "inventoryEventId": "5be2934d-3944-4efc-aaac-35a6d1f19ac1",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "rejected",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T06:08:15.283Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T06:08:15.283Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T06:08:15.283Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T06:08:16.035Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost (6,254) despite a higher purchase price than Vendor C, because its downtime and risk costs are far lower."
+          },
+          "timestamp": "2026-09-04T06:08:16.035Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:08:16.036Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:08:16.036Z"
+        },
+        {
+          "event": "approval_received",
+          "status": "rejected",
+          "meta": {
+            "decision": "rejected"
+          },
+          "timestamp": "2026-09-04T06:08:18.450Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹96,550 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹39,600 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹96,550 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹39,600 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "b9adb558-da3d-491b-810c-fb6453e4dd50",
+      "inventoryEventId": "20a0169a-35e6-4b44-a04c-c7c1d2b0f0c0",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "awaiting_approval",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T06:09:16.798Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T06:09:16.798Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T06:09:16.798Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T06:09:18.695Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost at $6,254, far below the others despite a slightly higher purchase price than Vendor A."
+          },
+          "timestamp": "2026-09-04T06:09:18.695Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:09:18.696Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:09:18.696Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹96,550 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹39,600 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹96,550 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹39,600 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "6e39d8a2-6d10-45c9-97b9-660318734faa",
+      "inventoryEventId": "631f9101-6519-406b-a27c-5d512d552a7c",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "approved",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T06:10:22.297Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T06:10:22.297Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T06:10:22.297Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T06:10:23.246Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B’s total expected cost ($6,254) is far lower than Vendor A ($12,116) and Vendor C ($14,760), even though its purchase price is higher than Vendor A’s."
+          },
+          "timestamp": "2026-09-04T06:10:23.246Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:10:23.248Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:10:23.248Z"
+        },
+        {
+          "event": "approval_received",
+          "status": "approved",
+          "meta": {
+            "decision": "approved"
+          },
+          "timestamp": "2026-09-04T06:23:03.082Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,00,950 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹44,000 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,00,950 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹44,000 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "5960393e-24ed-4bb8-8188-8024a1dc8551",
+      "inventoryEventId": "3237d956-b05d-43bb-a8ce-17f51222e13d",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "awaiting_approval",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T06:23:29.920Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T06:23:29.920Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T06:23:29.920Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T06:23:30.924Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost (6,254) despite a higher purchase price than Vendor A, because its downtime and risk costs are far lower."
+          },
+          "timestamp": "2026-09-04T06:23:30.924Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:23:30.925Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:23:30.925Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,05,350 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹48,400 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,05,350 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹48,400 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "bc84e8d6-3d74-4393-8d05-8b4c2adf4097",
+      "inventoryEventId": "0278c282-847b-430a-924e-14d419e10b66",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "approved",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T06:23:33.293Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T06:23:33.293Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T06:23:33.293Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T06:23:34.053Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost (6,254) despite a higher purchase price, because its downtime and risk costs are far lower and it ships in 1 day."
+          },
+          "timestamp": "2026-09-04T06:23:34.053Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:23:34.053Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:23:34.053Z"
+        },
+        {
+          "event": "approval_received",
+          "status": "approved",
+          "meta": {
+            "decision": "approved"
+          },
+          "timestamp": "2026-09-04T06:23:36.403Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,09,750 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹52,800 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,09,750 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹52,800 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "36b04e83-ee97-410d-ab11-045a2fd6494e",
+      "inventoryEventId": "52d30c4f-7028-45db-a965-6cbfb4189cdd",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "awaiting_approval",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T06:24:36.288Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T06:24:36.288Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T06:24:36.288Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T06:24:37.209Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B’s total expected cost ( $6,254 ) is far lower than Vendor A ($12,116) and Vendor C ($14,760), despite a higher purchase price."
+          },
+          "timestamp": "2026-09-04T06:24:37.209Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:24:37.210Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T06:24:37.210Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,14,150 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹57,200 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,14,150 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹57,200 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "4c3b29f9-8e62-42ed-a5b4-3b1741efec9b",
+      "inventoryEventId": "9be43b13-1daf-405e-bac9-ac7631a5984d",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "awaiting_approval",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T10:40:52.153Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T10:40:52.153Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T10:40:52.154Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T10:40:53.283Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B’s purchase price is higher than Vendor A’s, but its downtime cost is dramatically lower, making the total expected cost about half of Vendor A’s."
+          },
+          "timestamp": "2026-09-04T10:40:53.283Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:40:53.362Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:40:53.362Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,18,550 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹61,600 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,18,550 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹61,600 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "43faad6d-61ed-4bee-bdf4-8b92fdb5177b",
+      "inventoryEventId": "260966c5-daf8-49fa-af07-fc680cd837eb",
+      "poNumber": "PO-2026-000001",
+      "receiptNumber": "GL-RCP-2026-000001",
+      "status": "reconciled",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": "order_TXvjhUppllXZRp",
+      "paymentId": "pay_TXvjy208zPw9kw",
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T10:40:54.801Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T10:40:54.802Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T10:40:54.802Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T10:40:55.982Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost at $6,254, far below the others despite a slightly higher purchase price than Vendor A."
+          },
+          "timestamp": "2026-09-04T10:40:55.982Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:40:56.006Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:40:56.006Z"
+        },
+        {
+          "event": "approval_received",
+          "status": "approved",
+          "meta": {
+            "decision": "approved"
+          },
+          "timestamp": "2026-09-04T10:40:59.284Z"
+        },
+        {
+          "event": "purchase_order_created",
+          "status": "ok",
+          "meta": {
+            "poNumber": "PO-2026-000001"
+          },
+          "timestamp": "2026-09-04T10:40:59.833Z"
+        },
+        {
+          "event": "razorpay_order_created",
+          "status": "ok",
+          "meta": {
+            "orderId": "order_TXvjhUppllXZRp"
+          },
+          "timestamp": "2026-09-04T10:41:00.123Z"
+        },
+        {
+          "event": "payment_received",
+          "status": "ok",
+          "meta": {
+            "paymentId": "pay_TXvjy208zPw9kw"
+          },
+          "timestamp": "2026-09-04T10:41:30.881Z"
+        },
+        {
+          "event": "signature_verified",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T10:41:30.882Z"
+        },
+        {
+          "event": "ledger_reconciled",
+          "status": "ok",
+          "meta": {
+            "amount": 4400,
+            "savings": 8506
+          },
+          "timestamp": "2026-09-04T10:41:30.887Z"
+        },
+        {
+          "event": "receipt_generated",
+          "status": "ok",
+          "meta": {
+            "receiptNumber": "GL-RCP-2026-000001"
+          },
+          "timestamp": "2026-09-04T10:41:30.887Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,22,950 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹66,000 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,22,950 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹66,000 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "264674fb-f3de-4de8-8f7a-c5df505d2508",
+      "inventoryEventId": "493dff1d-60dc-4488-b51e-ae9b69bb17e7",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "awaiting_approval",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T10:41:56.315Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T10:41:56.316Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T10:41:56.316Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T10:41:57.862Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost (6,254) despite a higher purchase price than Vendor A, because its downtime and risk costs are far lower."
+          },
+          "timestamp": "2026-09-04T10:41:57.862Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:41:57.950Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:41:57.950Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,27,350 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹70,400 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,27,350 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹70,400 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "b16b9bc6-14aa-425c-998e-bb0357530a2a",
+      "inventoryEventId": "74955691-d8b1-47e5-8d9c-a1ed02da1310",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "awaiting_approval",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T10:42:51.563Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T10:42:51.563Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T10:42:51.563Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T10:42:52.519Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost (6,254) despite a higher purchase price than Vendor A and C, because its downtime and risk costs are far lower."
+          },
+          "timestamp": "2026-09-04T10:42:52.519Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:42:52.613Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:42:52.613Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,31,750 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹74,800 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,31,750 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹74,800 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "6736528a-4e0d-4a8f-abc7-1c15679354c0",
+      "inventoryEventId": "a9d4633e-c82f-4f66-85e5-07ba6313555a",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "rejected",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T10:42:54.789Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T10:42:54.790Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T10:42:54.790Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T10:42:55.930Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B’s higher purchase price is offset by very low downtime and risk costs, giving the lowest total expected cost."
+          },
+          "timestamp": "2026-09-04T10:42:55.930Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:42:55.954Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:42:55.954Z"
+        },
+        {
+          "event": "approval_received",
+          "status": "rejected",
+          "meta": {
+            "decision": "rejected"
+          },
+          "timestamp": "2026-09-04T10:42:59.537Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,36,150 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹79,200 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,36,150 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹79,200 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "339717cc-ffa9-4d28-9abb-11ca420c4556",
+      "inventoryEventId": "a191de02-049f-4dd1-902f-cc3606279f48",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "awaiting_approval",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T10:43:33.567Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T10:43:33.567Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T10:43:33.567Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T10:43:34.569Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost (6,254) despite a higher purchase price than Vendor A, because its downtime and risk costs are far lower."
+          },
+          "timestamp": "2026-09-04T10:43:34.569Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:43:34.641Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:43:34.641Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,36,150 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹79,200 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,36,150 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹79,200 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "fec8550b-28ed-4410-b846-c22c41bc6f39",
+      "inventoryEventId": "8e8a6b69-0c2e-4536-a9ab-4d408ca8e308",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "awaiting_approval",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T10:43:36.816Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T10:43:36.817Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T10:43:36.817Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T10:43:38.063Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B’s total expected cost (6254) is far lower than Vendor A (12116) and Vendor C (14760), despite a higher purchase price."
+          },
+          "timestamp": "2026-09-04T10:43:38.063Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:43:38.096Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:43:38.096Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,40,550 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹83,600 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,40,550 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹83,600 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "fed30b6f-58f7-4d94-9d2c-3a60eb9aa753",
+      "inventoryEventId": "b3fcbee5-51de-453e-a644-0ddcdc2378bb",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "awaiting_approval",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T10:44:10.222Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T10:44:10.223Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T10:44:10.223Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T10:44:11.431Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B’s purchase price is slightly higher than Vendor A, but its downtime cost is dramatically lower, cutting the total expected cost in half."
+          },
+          "timestamp": "2026-09-04T10:44:11.431Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:44:11.452Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:44:11.452Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,44,950 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹88,000 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,44,950 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹88,000 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "58ef8be3-ffb4-4c32-b5d5-6d64ed819441",
+      "inventoryEventId": "42c586a3-624c-4cb0-bd66-563c3e2979f1",
+      "poNumber": "PO-2026-000002",
+      "receiptNumber": null,
+      "status": "order_created",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": "order_TXvnAc1nv9e4Q4",
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T10:44:12.818Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T10:44:12.819Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T10:44:12.819Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T10:44:13.756Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B’s total expected cost (6254) is far lower than Vendor A (12116) and Vendor C (14760), making it the most economical overall."
+          },
+          "timestamp": "2026-09-04T10:44:13.756Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:44:13.790Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:44:13.790Z"
+        },
+        {
+          "event": "approval_received",
+          "status": "approved",
+          "meta": {
+            "decision": "approved"
+          },
+          "timestamp": "2026-09-04T10:44:16.384Z"
+        },
+        {
+          "event": "purchase_order_created",
+          "status": "ok",
+          "meta": {
+            "poNumber": "PO-2026-000002"
+          },
+          "timestamp": "2026-09-04T10:44:16.951Z"
+        },
+        {
+          "event": "razorpay_order_created",
+          "status": "ok",
+          "meta": {
+            "orderId": "order_TXvnAc1nv9e4Q4"
+          },
+          "timestamp": "2026-09-04T10:44:17.195Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,49,350 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹92,400 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,49,350 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹92,400 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    },
+    {
+      "jobId": "cff3ae64-188c-494f-b926-f802611e6bae",
+      "inventoryEventId": "c2e3455e-f29a-4bf5-81d1-a3ec7d537d43",
+      "poNumber": null,
+      "receiptNumber": null,
+      "status": "awaiting_approval",
+      "vendorId": "vendor_b",
+      "vendorName": "Vendor B — FastWire Supplies",
+      "payableAmount": 4400,
+      "orderId": null,
+      "paymentId": null,
+      "events": [
+        {
+          "event": "inventory_threshold_crossed",
+          "status": "ok",
+          "meta": {},
+          "timestamp": "2026-09-04T10:45:14.285Z"
+        },
+        {
+          "event": "vendor_eliminated",
+          "status": "excluded",
+          "meta": {
+            "vendorId": "vendor_d",
+            "vendorName": "Vendor D — QuickMetal Traders",
+            "reason": "currently unavailable, insufficient stock"
+          },
+          "timestamp": "2026-09-04T10:45:14.285Z"
+        },
+        {
+          "event": "vendors_analyzed",
+          "status": "ok",
+          "meta": {
+            "eligibleCount": 3,
+            "totalCount": 4
+          },
+          "timestamp": "2026-09-04T10:45:14.285Z"
+        },
+        {
+          "event": "vendor_selected",
+          "status": "ok",
+          "meta": {
+            "vendorId": "vendor_b",
+            "vendorName": "Vendor B — FastWire Supplies",
+            "totalExpectedCost": 6254
+          },
+          "timestamp": "2026-09-04T10:45:15.337Z"
+        },
+        {
+          "event": "agent_rationale",
+          "status": "info",
+          "meta": {
+            "text": "Vendor B has the lowest total expected cost (≈$6,254) despite a higher purchase price, because its downtime cost is dramatically lower due to fast 1‑day delivery."
+          },
+          "timestamp": "2026-09-04T10:45:15.337Z"
+        },
+        {
+          "event": "guardrail_blocked",
+          "status": "blocked",
+          "meta": {
+            "payableAmount": 4400,
+            "threshold": 10000,
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:45:15.433Z"
+        },
+        {
+          "event": "approval_requested",
+          "status": "pending",
+          "meta": {
+            "firedRules": [
+              "category_cap_monthly",
+              "cumulative_spend_day"
+            ]
+          },
+          "timestamp": "2026-09-04T10:45:15.433Z"
+        }
+      ],
+      "policyResult": {
+        "action": "REQUIRES_APPROVAL",
+        "rules": [
+          {
+            "rule": "cap_per_order",
+            "description": "Single order must not exceed ₹10,000",
+            "passed": true,
+            "detail": "This order is ₹4,400, limit is ₹10,000"
+          },
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,49,350 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹92,400 (limit ₹25,000)"
+          }
+        ],
+        "firedRules": [
+          {
+            "rule": "category_cap_monthly",
+            "description": "Raw Materials spend must not exceed ₹50,000 per month",
+            "passed": false,
+            "detail": "Raw Materials spend this month would reach ₹1,49,350 (limit ₹50,000)"
+          },
+          {
+            "rule": "cumulative_spend_day",
+            "description": "Total procurement spend must not exceed ₹25,000 per day",
+            "passed": false,
+            "detail": "Today's cumulative spend would reach ₹92,400 (limit ₹25,000)"
+          }
+        ],
+        "explanation": "Requires human approval — policy rule(s) fired: category_cap_monthly, cumulative_spend_day."
+      }
+    }
+  ]
+}
